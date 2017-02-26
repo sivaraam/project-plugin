@@ -1,7 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+<extension point="org.eclipse.ui.popupMenus"> 
+   <viewerContribution 
+      id="org.eclipse.ui.articles.action.contribution.popup.editor"
+   targetID="#TextEditorContext">
+  <!-- <action
+         id="org.eclipse.ui.articles.action.contribution.navigator.action1" 
+         label="View Action 1"
+         menubarPath="additions" 
+         class="first.handlers.Right"
+      enablesFor="!">
+      </action>-->
+    <!--  <action
+         id="org.eclipse.ui.articles.action.contribution.navigator.action1" 
+         label="View Action 1"
+         menubarPath="additions" 
+         class="org.eclipse.ui.articles.action.contribution.ViewAction1Delegate"
+      enablesFor="!">
+      </action>
 
+   <menu
+         id="org.eclipse.ui.articles.action.contribution.navigator.subMenu"
+         label="View Sub Menu"
+         path="additions">
+      <separator name="group1"/>
+      </menu>
+      <action
+         id="org.eclipse.ui.articles.action.contribution.navigator.action2" 
+         label="View Action 2"
+      menubarPath="org.eclipse.ui.articles.action.contribution.navigator.subMenu/group1" 
+         class="org.eclipse.ui.articles.action.contribution.ViewAction2Delegate"
+      enablesFor="1">
+      </action> 
+      <action
+         id="org.eclipse.ui.articles.action.contribution.navigator.action3" 
+         label="View Action 3"
+      menubarPath="org.eclipse.ui.articles.action.contribution.navigator.subMenu/group1" 
+         class="org.eclipse.ui.articles.action.contribution.ViewAction3Delegate"
+      enablesFor="2+">
+      </action>   -->
+   	  <action
+    	     id="First.commands.sampleCommandgsdgsd" 
+        	 label="Reuse Action 1111111"
+      		 menubarPath="additions" 
+             class="first.handlers.ReuseHandler"> 
+      </action> 
+      <action
+    	     id="First.commands.Right" 
+        	 label="Reuse Action 1111111"
+      		 menubarPath="additions" 
+             class="first.handlers.ReuseHandler"> 
+      </action> 
+   </viewerContribution> 
+</extension>
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -23,12 +75,20 @@
             categoryId="First.commands.category"
             id="First.commands.sampleCommand2">
       </command>
+      <command
+            name="Right"
+            id="First.commands.Right">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             commandId="First.commands.sampleCommand"
             class="first.handlers.AddHandler">
+      </handler>
+      <handler
+            commandId="First.commands.Right"
+            class="first.handlers.Right">
       </handler>
       <handler
             commandId="First.commands.sampleCommand1"
@@ -66,7 +126,7 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                label="Plugin"
-               mnemonic="M"
+               mnemonic="Z"
                id="First.menus.sampleMenu">
             <command
             	  label = "Add"
@@ -76,7 +136,7 @@
             <command
             	  label = "Reuse"
                   commandId="First.commands.sampleCommand1"
-                  mnemonic="S"
+                  mnemonic="Z"
                   id="First.menus.sampleCommand1">
             </command>
             <command
