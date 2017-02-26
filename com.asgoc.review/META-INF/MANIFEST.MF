@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Review
+Bundle-SymbolicName: com.asgoc.review
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.asgoc.review.Activator
+Bundle-Vendor: ASGOC
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
