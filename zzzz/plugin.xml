@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.ui.IEditorInput"
+            id="zzzz.contribution1">
+         <menu
+               label="New Submenu"
+               path="additions"
+               id="zzzz.menu1">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="New Action"
+               class="zzzz.popup.actions.NewAction"
+               menubarPath="zzzz.menu1/group1"
+               enablesFor="1"
+               id="zzzz.newAction">
+         </action>
+      </objectContribution>
+   </extension>
+  
+</plugin>
