@@ -1,9 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: First
-Bundle-SymbolicName: First;singleton:=true
+Bundle-Name: Review
+Bundle-SymbolicName: com.asgoc.review.ui
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: first.Activator
+Bundle-Activator: com.asgoc.review.ui.Activator
+Bundle-Vendor: ASGOC
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

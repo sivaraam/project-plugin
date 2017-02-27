@@ -1,4 +1,4 @@
-package first;
+package com.asgoc.review.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "First"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "com.asgoc.review.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
