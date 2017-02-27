@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.ui.IEditorInput"
+            id="com.asgoc.add.ui.contribution1">
+         <menu
+               label="Add"
+               path="additions"
+               id="com.asgoc.add.ui.menu1">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="Add code"
+               class="com.asgoc.add.ui.popup.actions.NewAction"
+               menubarPath="com.asgoc.add.ui.menu1/group1"
+               enablesFor="1"
+               id="com.asgoc.add.ui.addCode">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>
