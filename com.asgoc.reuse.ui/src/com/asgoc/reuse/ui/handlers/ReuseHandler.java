@@ -1,5 +1,6 @@
 package com.asgoc.reuse.ui.handlers;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,13 +10,21 @@ import java.net.URL;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
+
+
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class ReuseHandler extends AbstractHandler {
+public class ReuseHandler extends AbstractHandler{
 	/**
 	 * The constructor.
 	 */
@@ -26,30 +35,31 @@ public class ReuseHandler extends AbstractHandler {
 	 * the command has been executed, so extract extract the needed information
 	 * from the application context.
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		/*IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		MessageDialog.openInformation(
-				window.getShell(),
-				"Add",
-				"Code to be added ");*/
+	StringBuilder stringbuilder = new StringBuilder();
+	@Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
 		URL url;
 		try {
-			 //String path = new Path(Platform.resolve(Platform.find(plugin.getBundle(), new Path("C:\\Users/DELL/Downloads/eclipse/plugins/test.txt"))).getFile()).toFile().toString();
-		        //url = new URL("C:\\Users/DELL/Downloads/eclipse/plugins/test.txt");
 			url = new URL("file:///home/unique/test");
-		    InputStream inputStream = url.openConnection().getInputStream();
+			InputStream inputStream = url.openConnection().getInputStream();
 		    BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 		    String inputLine;
 		 
 		    while ((inputLine = in.readLine()) != null) {
-		        System.out.println(inputLine);
+		        stringbuilder.append(inputLine);
 		    }
 		 
 		    in.close();
-		 
-		} catch (IOException e) {
-		    e.printStackTrace();
+		
+		IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IEditorInput input = editorPart.getEditorInput();
+		IDocument document=(((ITextEditor)editorPart).getDocumentProvider()).getDocument(input);
+		System.out.println("Hello"+document.get()); 
+		document.set(document.get()+stringbuilder);
 		}
-		return null;
-	}
+		catch (IOException e) {
+			    e.printStackTrace();
+		}
+        return null;
+    } 
 }
