@@ -1,0 +1,38 @@
+
+ <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="First.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+8"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+      <key
+            commandId="First.commands.sampleCommand1"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+7"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+      <key
+            commandId="First.commands.sampleCommand2"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+  
+  
+  
+  
+  <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="First.toolbars.sampleToolbar">
+            <command
+                  commandId="First.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  tooltip="Say hello world"
+                  id="First.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
