@@ -1,4 +1,4 @@
-package zzzz.popup.actions;
+package com.asgoc.delete.ui.popup.actions;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -39,7 +39,7 @@ public class NewAction implements IObjectActionDelegate  {
 		//MessageDialog.+-DialogArea();
 		ListSelectionDialog dlg = new ListSelectionDialog( shell, "bb", new BaseWorkbenchContentProvider(), new WorkbenchLabelProvider(), "select the functions to delete"); 
 		//dlg.setInitialSelections(dirtyEditors); 
-		dlg.setTitle("delete");
+		dlg.setTitle("Delete");
 		dlg.open();
 
 

@@ -1,12 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Zzzz
-Bundle-SymbolicName: zzzz;singleton:=true
+Bundle-Name: Delete
+Bundle-SymbolicName: com.asgoc.delete.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: zzzz.Activator
+Bundle-Activator: com.asgoc.delete.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.swt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: ASGOC
