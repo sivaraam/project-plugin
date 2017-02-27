@@ -1,4 +1,4 @@
-package first.handlers;
+package com.asgoc.reuse.ui.handlers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,11 +15,11 @@ import org.eclipse.core.commands.ExecutionException;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class AddHandler extends AbstractHandler {
+public class ReuseHandler extends AbstractHandler {
 	/**
 	 * The constructor.
 	 */
-	public AddHandler() {
+	public ReuseHandler() {
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class AddHandler extends AbstractHandler {
 		try {
 			 //String path = new Path(Platform.resolve(Platform.find(plugin.getBundle(), new Path("C:\\Users/DELL/Downloads/eclipse/plugins/test.txt"))).getFile()).toFile().toString();
 		        //url = new URL("C:\\Users/DELL/Downloads/eclipse/plugins/test.txt");
-			url = new URL("file:///C://Users/DELL/Downloads/eclipse/plugins/test.txt");
+			url = new URL("file:///home/unique/test");
 		    InputStream inputStream = url.openConnection().getInputStream();
 		    BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 		    String inputLine;

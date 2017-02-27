@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Plugin Category"
+            id="com.asgoc.reuse.ui.commands.category">
+      </category>
+      <command
+            name="Reuse Action"
+            categoryId="com.asgoc.reuse.ui.commands.category"
+            id="com.asgoc.reuse.ui.commands.reuseCommand">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+     <handler
+            commandId="com.asgoc.reuse.ui.commands.reuseCommand"
+            class="com.asgoc.reuse.ui.handlers.ReuseHandler">
+     </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Plugin"
+               mnemonic="M"
+               id="com.asgoc.reuse.ui.menus.reuse">
+           <command
+              	    label = "Reuse"
+                    commandId="com.asgoc.reuse.ui.commands.reuseCommand"
+                    mnemonic="S"
+                    id="com.asgoc.reuse.ui.menus.reuseMenu">
+           </command>
+        </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>

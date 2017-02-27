@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: First
-Bundle-SymbolicName: First;singleton:=true
+Bundle-Name: Reuse
+Bundle-SymbolicName: com.asgoc.reuse.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: first.Activator
+Bundle-Activator: com.asgoc.reuse.ui.Activator
+Bundle-Vendor: ASGOC
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.ui.editors.text
+
