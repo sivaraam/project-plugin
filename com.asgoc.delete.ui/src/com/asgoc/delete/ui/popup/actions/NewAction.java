@@ -1,9 +1,7 @@
 package com.asgoc.delete.ui.popup.actions;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
@@ -37,7 +35,7 @@ public class NewAction implements IObjectActionDelegate  {
 		//MessageDialog dialog = new MessageDialog(shell,"menu","swathte");
 		//MessageDialog.openInformation(shell,"menu","swthe");
 		//MessageDialog.+-DialogArea();
-		ListSelectionDialog dlg = new ListSelectionDialog( shell, "bb", new BaseWorkbenchContentProvider(), new WorkbenchLabelProvider(), "select the functions to delete"); 
+		ListSelectionDialog dlg = new ListSelectionDialog( shell, "bb", new BaseWorkbenchContentProvider(), new WorkbenchLabelProvider(), "Select the functions to delete"); 
 		//dlg.setInitialSelections(dirtyEditors); 
 		dlg.setTitle("Delete");
 		dlg.open();

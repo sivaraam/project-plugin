@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-   <extension
+   
+     <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             objectClass="org.eclipse.ui.IEditorInput"
             id="com.asgoc.delete.ui.contribution1">
          <menu
-               label="New Submenu"
+               label="Code Deletion"
                path="additions"
                id="com.asgoc.delete.ui.menu1">
             <separator
@@ -16,7 +16,7 @@
             </separator>
          </menu>
          <action
-               label="New Action"
+               label="Deletion Dialog"
                class="com.asgoc.delete.ui.popup.actions.NewAction"
                menubarPath="com.asgoc.delete.ui.menu1/group1"
                enablesFor="1"
