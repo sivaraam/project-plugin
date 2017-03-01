@@ -34,18 +34,14 @@ public class ReuseHandler extends AbstractHandler{
 	 */
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-		String[] fileLines = null;
+		StringBuilder fileContents = new StringBuilder();
 		try {
 			RepositoryAccessor repoHandler = new RepositoryAccessor("/home/unique");
-			fileLines = repoHandler.readFromFile("test1234");
+			fileContents = repoHandler.readFromFile("test1234");
 		}
 		catch (InvalidRepositoryOperation iro) {
 			iro.printStackTrace();
 		}
-		
-		StringBuilder fileContents = new StringBuilder();
-		for(String line : fileLines)
-			fileContents.append(line);
 		 
 		IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IEditorInput input = editorPart.getEditorInput();
