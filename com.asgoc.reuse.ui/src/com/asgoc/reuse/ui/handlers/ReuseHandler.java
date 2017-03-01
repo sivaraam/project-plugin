@@ -4,7 +4,9 @@ package com.asgoc.reuse.ui.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 
@@ -29,24 +31,29 @@ public class ReuseHandler extends AbstractHandler{
 	}
 
 	/**
-	 * the command has been executed, so extract extract the needed information
+	 * the command has been executed, so extract the needed information
 	 * from the application context.
 	 */
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 		StringBuilder fileContents = new StringBuilder();
 		try {
-			RepositoryAccessor repoHandler = new RepositoryAccessor("/home/unique");
-			fileContents = repoHandler.readFromFile("test1234");
+			RepositoryAccessor repoHandler = new RepositoryAccessor("C:\\Users\\DELL\\Downloads\\eclipse\\plugins");
+			fileContents = repoHandler.readFromFile("test.txt");
 		}
 		catch (InvalidRepositoryOperation iro) {
 			iro.printStackTrace();
 		}
-		 
 		IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IEditorInput input = editorPart.getEditorInput();
 		IDocument document=(((ITextEditor)editorPart).getDocumentProvider()).getDocument(input);
-		document.set(document.get()+fileContents);
+		ITextSelection textSelection = (ITextSelection) editorPart.getSite().getSelectionProvider().getSelection();
+		int offset = textSelection.getOffset();
+		try {
+			document.set(document.get(0,offset)+fileContents+document.get(offset, document.getLength()-offset));
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
         return null;
 	}
 }
