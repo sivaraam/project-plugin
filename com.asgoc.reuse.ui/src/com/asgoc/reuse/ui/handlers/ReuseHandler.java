@@ -1,21 +1,20 @@
 package com.asgoc.reuse.ui.handlers;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
+
+import repositoryAccessor.InvalidRepositoryOperation;
+import repositoryAccessor.RepositoryAccessor;
 
 
 
@@ -32,34 +31,29 @@ public class ReuseHandler extends AbstractHandler{
 	}
 
 	/**
-	 * the command has been executed, so extract extract the needed information
+	 * the command has been executed, so extract the needed information
 	 * from the application context.
 	 */
-	StringBuilder stringbuilder = new StringBuilder();
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-		URL url;
+		StringBuilder fileContents = new StringBuilder();
 		try {
-			url = new URL("file:///home/unique/test");
-			InputStream inputStream = url.openConnection().getInputStream();
-		    BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-		    String inputLine;
-		 
-		    while ((inputLine = in.readLine()) != null) {
-		        stringbuilder.append(inputLine);
-		    }
-		 
-		    in.close();
-		
+			RepositoryAccessor repoHandler = new RepositoryAccessor("C:\\Users\\DELL\\Downloads\\eclipse\\plugins");
+			fileContents = repoHandler.readFromFile("test.txt");
+		}
+		catch (InvalidRepositoryOperation iro) {
+			iro.printStackTrace();
+		}
 		IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IEditorInput input = editorPart.getEditorInput();
 		IDocument document=(((ITextEditor)editorPart).getDocumentProvider()).getDocument(input);
-		System.out.println("Hello"+document.get()); 
-		document.set(document.get()+stringbuilder);
-		}
-		catch (IOException e) {
-			    e.printStackTrace();
+		ITextSelection textSelection = (ITextSelection) editorPart.getSite().getSelectionProvider().getSelection();
+		int offset = textSelection.getOffset();
+		try {
+			document.set(document.get(0,offset)+fileContents+document.get(offset, document.getLength()-offset));
+		} catch (BadLocationException e) {
+			e.printStackTrace();
 		}
         return null;
-    } 
+	}
 }
