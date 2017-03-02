@@ -38,8 +38,8 @@ public class ReuseHandler extends AbstractHandler{
     public Object execute(ExecutionEvent event) throws ExecutionException {
 		StringBuilder fileContents = new StringBuilder();
 		try {
-			RepositoryAccessor repoHandler = new RepositoryAccessor("C:\\Users\\DELL\\Downloads\\eclipse\\plugins");
-			fileContents = repoHandler.readFromFile("test.txt");
+			RepositoryAccessor repoHandler = new RepositoryAccessor("/home/unique");
+			fileContents = repoHandler.readFromFile("test1234");
 		}
 		catch (InvalidRepositoryOperation iro) {
 			iro.printStackTrace();
