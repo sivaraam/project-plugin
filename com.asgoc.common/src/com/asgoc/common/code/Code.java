@@ -12,58 +12,136 @@ import java.util.List;
 public final class Code {
 	
 	/**
-	 * Inner class used to represent the metadata of a code block
+	 * Inner class used to represent the metadata of a code block.
 	 * 
 	 * @author Kaartic Sivaraam
 	 *
 	 */
-	public final class CodeMetadata {
+	public static final class Metadata {
 		
-		public CodeMetadata(String title, StringBuilder description,
-			 StringBuilder documentation, List<String> requiredHeaders,
-			 Path location) {
+		/**
+		 * Inner class used to represent the frequently accessed metadata.  
+		 * 
+		 * @author Kaartic Sivaraam
+		 *
+		 */
+		public static final class CrucialMetadata {
+			
+			CrucialMetadata (String title, StringBuilder description, Path relativeLocation) {
+				this.title = title;
+				this.description = description;
+				this.relativeLocation = relativeLocation;
+			}
+			
+			public String getTitle() {
+				return title;
+			}
+			
+			public StringBuilder getDescription() {
+				return description;
+			}
+			
+			public Path getLocation() {
+				return relativeLocation;
+			}
+			
+			/**
+			 * Title of the code block.
+			 */
+			String title;
+			
+			/**
+			 * Brief description about the code block.
+			 */
+			StringBuilder description;
+			
+			/**
+			 * The location of the code block relative to the base path 
+			 * of the code repository.
+			 */
+			Path relativeLocation;
+		}
 		
-			this.title = title;
-			this.description = description;
+		Metadata(String title, StringBuilder description,
+				 StringBuilder documentation, List<String> requiredHeaders,
+				 Path relativeLocation) {
+			this.crucialMetadata =  new CrucialMetadata(title, description, relativeLocation);
 			this.documentation = documentation;
 			this.requiredHeaders = requiredHeaders;
-			this.location = location;
 		}
 		
 		public String getTitle() {
-			return title;
+			return crucialMetadata.title;
 		}
 		
 		public StringBuilder getDescription() {
-			return description;
+			return crucialMetadata.description;
+		}
+		
+		public Path getLocation() {
+			return crucialMetadata.relativeLocation;
+		}
+		
+		public CrucialMetadata getCrucialMetadata() {
+			return crucialMetadata;
 		}
 		
 		public StringBuilder getDocumentation() {
 			return documentation;
 		}
-		
-		public Path getLocation() {
-			return location;
-		}
-		
+
 		public List<String> getHeaders() {
 			return requiredHeaders;
 		}
 			
-		String title;
-		StringBuilder description;
+		/**
+		 * An instance of the crucial metadata class used to 
+		 * represent the crucial metadata. 
+		 */
+		CrucialMetadata crucialMetadata;
+		
+		/**
+		 * Documentation about the code block. This would allow
+		 * a developer to know how to use a code block. 
+		 */
 		StringBuilder documentation;
-		Path location;
+		
+		/**
+		 * The list representing the header files required for 
+		 * the proper working of the code block.
+		 */
 		List<String> requiredHeaders;
 		
 	}
 	
-	public Code(CodeMetadata metadata, StringBuilder codeBlock) {
-		this.metadata = metadata;
+	public Code(String title, StringBuilder description,
+				StringBuilder documentation, List<String> requiredHeaders,
+				Path relativeLocation, StringBuilder codeBlock) {
+		this.metadata = new Metadata(title, description, documentation, requiredHeaders, relativeLocation); 
 		this.codeBlock = codeBlock;
 	}
 	
-	public CodeMetadata getMetadata() {
+	public String getTitle() {
+		return metadata.crucialMetadata.title;
+	}
+	
+	public StringBuilder getDescription() {
+		return metadata.crucialMetadata.description;
+	}
+	
+	public Path getLocation() {
+		return metadata.crucialMetadata.relativeLocation;
+	}
+	
+	public StringBuilder getDocumentation() {
+		return metadata.documentation;
+	}
+
+	public List<String> getHeaders() {
+		return metadata.requiredHeaders;
+	}
+	
+	public Metadata getMetadata() {
 		return metadata;
 	}
 	
@@ -71,7 +149,16 @@ public final class Code {
 		return codeBlock;
 	}
 	
-	CodeMetadata metadata;
+	/**
+	 * An instance of the Metadata class used to store metadata
+	 * about the code.
+	 */
+	Metadata metadata;
+	
+	/**
+	 * The code block which is used to represent the  block of 
+	 * code which is described by the metadata.
+	 */
 	StringBuilder codeBlock;
 	
 }

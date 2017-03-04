@@ -1,20 +1,26 @@
 package com.asgoc.common.code;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.asgoc.common.code.jsonManipulator.JSONManipulator;
 import com.asgoc.common.code.repositoryAccessor.InvalidRepositoryOperation;
 import com.asgoc.common.code.repositoryAccessor.RepositoryAccessor;
 
+/**
+ * The class used to access and manipulate the Code repository.
+ * 
+ * @author Kaartic Sivaraam
+ *
+ */
 public final class CodeRepository {
 	
-	/**
-	 * 
+	/** 
 	 * @param basePath
-	 * 					The base path of the code repository. It should not end with a '/' 
+	 * 					The base path of the code repository. 
+	 *   
 	 * @throws InvalidRepositoryOperation
 	 * 					Thrown when the base path does not exist
 	 */
@@ -23,66 +29,117 @@ public final class CodeRepository {
 	}
 	
 	/**
-	 * Function to get a JSON String representation of the CodeMetadata instance. 
-	 * All values except the location are found in the JSON string as the path is implicit.
+	 * Method used to store the metadata of the code block to the metdata file
+	 * 
+	 * @param metadataLocation
+	 * 			The location of the metadata file. As in other cases this 
+	 * location is also relative to the base path of the repository.
 	 *  
-	 * @param code 
-	 * 			The object representing the code's metadata 
-	 * @return
-	 * 			The String representing the JSON  representation of a Code's metadata. 
-	 * It contains all values except the location of the code (it is implicit). 
-	 * 		
+	 * @param metadata
+	 * 			The metadata which is converted to JSON and stored.
+	 * 
+	 * @throws InvalidRepositoryOperation
+	 * 			Thrown when the invalid repository operations are performed. 
+	 * For more information, refer documentation of RepositoryAccessor class. 
 	 */
-	private String getJSONString(Code.CodeMetadata code) {
+	private void storeMetadata(Path metadataLocation, Code.Metadata metadata) throws InvalidRepositoryOperation {
 		
-		//Add the key value pairs that are (String, String) pairs
-		Map<String, String> stringPairs = new HashMap<>();
-		JSONManipulator jm = new JSONManipulator();
-		
-		stringPairs.put("title", code.title);
-		stringPairs.put("description", code.description.toString());
-		stringPairs.put("documentation", code.documentation.toString());
-		
-		jm.appendMap("metadata",stringPairs);
-		
-		//Add the key value pair that is of type (String, Collection<?>)
-		jm.appendArray("requiredHeaders", code.requiredHeaders);
-		
-		return jm.getJSONString();
+		jsonManip = new JSONManipulator(metadata);
+		String metadataString = jsonManip.toString(3);
+		repoAccessor.writeToNewFile(metadataLocation, metadataString);
 		
 	}
 	
 	/**
-	 * Method used to add code to the code and it's metadata to the code repository
-	 * @param location 
-	 * 					The location represents the category of the Code block.
-	 * Put another way, it is the sub-directory in which the code is stored.
-	 * @param fileName
-	 * @param metaData
-	 * @param codeBock
+	 * Method used to update the index file of the repository. In case 
+	 * the index file does not exist it is created.
+	 * 
+	 * @param indexLocation
+	 * 			Location of the index file relative to the base path 
+	 * of the repository.
+	 * 
+	 * @param crucialMd
+	 * 			The CurcialMetadata instance used to update the index file.
+	 * 
 	 * @throws InvalidRepositoryOperation
+	 * 			Thrown when the invalid repository operations are performed. 
+	 * For more information, refer documentation of RepositoryAccessor class. 
 	 */
-	public void addCode(String location, String fileName, Code code) throws InvalidRepositoryOperation {
+	private void updateIndex(Path indexLocation, Code.Metadata.CrucialMetadata crucialMd) throws InvalidRepositoryOperation {
 		
-		//create a JSONString of the the metadata, from the fields of the "CodeMetadata" class and write to 
-		boolean locationProvided = location != "" || location != null ;  
-		String metadataLocation = "metadata/"+(locationProvided ? location+"/" : "" )+fileName+".json";
-		String codeLocation = "functions/"+(locationProvided ? location+"/" : "")+fileName;
-		String metadata = getJSONString(code.metadata);
+		String indexString = null;
+		Map<String, String> hmap = new HashMap<>();
+		hmap.put("title", crucialMd.getTitle());
+		hmap.put("description", crucialMd.getDescription().toString());
 		
-		repoAccessor.writeToNewFile(metadataLocation, metadata);
+		
+		try {
+			//Get JSON found in index
+			indexString = repoAccessor.readFromFile(indexLocation).toString();
+			
+			//Append the data about new index file to obtained JSON
+			jsonManip = new JSONManipulator(indexString);
+			jsonManip.appendMap(crucialMd.getLocation().toString(), hmap);
+			
+			//write new JSON String back to file
+			indexString = jsonManip.toString(3);
+			repoAccessor.appendToFile(indexLocation, indexString);
+		}
+		catch(InvalidRepositoryOperation iro) {
+			//If Index file does not exist create it (should occur only once)
+			if(iro.getMessage().equals("File does not exist")) {
+				//Add the JSON representation for the string
+				jsonManip = new JSONManipulator();
+				jsonManip.appendMap(crucialMd.getLocation().toString(),hmap);
+				
+				//Write JSON to new file
+				indexString = jsonManip.toString(3); 
+				repoAccessor.writeToNewFile(indexLocation, indexString);
+			}
+			else 
+				throw iro;
+		}
+	}
+	
+	/**
+	 * Method used to store the code and it's metadata to the specified location which should 
+	 * be relative to the base path of the code repository.
+	 * 
+	 * @param code
+	 * 				The instance of the Code class that represents the code that needs
+	 * to be added to the repository.
+	 * 
+	 * @throws InvalidRepositoryOperation
+	 * 				Thrown when the invalid repository operations are performed. 
+	 * For more information refer documentation of RepositoryAccessor class. 
+	 */
+	public void storeCode(Code code) throws InvalidRepositoryOperation {
+		
+		//TODO : Remove the extension before naming the metadata file
+		Path codeLocation = code.metadata.crucialMetadata.relativeLocation;
+		Path metadataLocation = Paths.get(codeLocation.toString()+"-metadata.json");
+		Path parent = codeLocation.getParent();
+		Path indexLocation = Paths.get( (parent != null ? parent.toString() : "") + "index.json" );
+		
+		storeMetadata(metadataLocation, code.metadata);
 		repoAccessor.writeToNewFile(codeLocation, code.codeBlock.toString());
+		updateIndex(indexLocation, code.metadata.crucialMetadata);
+		
+	}
+
+	
+	
+	/*Code getCode(String relativeCodeLocation) {
 		
 	}
 	
-	CodeMetadata getCode(Path locationOfCode){
+	Code.Metadata.CrucialMetadata getCodes() {
 		
 	}
+	*/
 	
-	List<Map.Entry<String, Path>> getCodes() {
-		
-	}
-	
+	//TODO Find perfect location of JSONManipulator instance
+	private static JSONManipulator jsonManip;
 	private RepositoryAccessor repoAccessor;
 
 }

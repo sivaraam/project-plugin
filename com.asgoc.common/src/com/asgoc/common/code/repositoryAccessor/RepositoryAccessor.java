@@ -141,8 +141,8 @@ public class RepositoryAccessor {
      *         <li> an <code> IOException </code> occurs during File write operation
      * </ul>
      */
-     public void appendToFile(String relativeDestination, String contentsToAppend) throws InvalidRepositoryOperation {
-        Path destinationPath = Paths.get(basePath.toString(), relativeDestination);
+     public void appendToFile(Path relativeDestination, String contentsToAppend) throws InvalidRepositoryOperation {
+        Path destinationPath = basePath.resolve(relativeDestination);
         
         if(Files.notExists(destinationPath.getParent())) {
             throw new InvalidRepositoryOperation ("Parent of file does not exist");
