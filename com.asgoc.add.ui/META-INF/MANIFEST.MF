@@ -3,6 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Add
 Bundle-SymbolicName: com.asgoc.add.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: com.asgoc.add.ui,
+ lib/RepositoryAccessor.jar,
+ .
 Bundle-Activator: com.asgoc.add.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
