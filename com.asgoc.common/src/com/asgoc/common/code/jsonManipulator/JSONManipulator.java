@@ -1,133 +1,95 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asgoc.common.code.jsonManipulator;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import org.json.JSONObject;
 
+import com.asgoc.common.code.Code;
+
 /**
- * Class that serves as a wrapper for the JSON creation and manipulation library. 
- * It provides an interface only to a small portion of the library that is required.
- * 
- * Most of the methods return the instance of the JSONManipulator used to invoke them
- * to allow nesting of calls.
+ * Class used to generate and aprse JSON.
  * 
  * @author Kaartic Sivaraam
  */
-public class JSONManipulator {
-    
+public abstract class JSONManipulator {
+   
 	/**
-	 * Creates an instance of the JSONManipulator by creating a 
-	 * JSONObject with it's default constructor.
+	 * Method used to get a JSONObject representation of a Code.Metadata.CrucialMetadata instance.
+	 * 
+	 * @param crucialmd
+	 * 				The Code.Metadata.CrucialMetadata instance that needs to be converted
+	 * to a JSONObject.
+	 * 
+	 * @return
+	 * 			The JSONObject representation of the given string.
 	 */
-	public JSONManipulator() {
-		json = new JSONObject();
+	public static JSONObject getJSON(Code.Metadata.CrucialMetadata crucialmd) {
+		JSONObject crucialJSON = new JSONObject();
+		crucialJSON.put("title", crucialmd.getTitle());
+		crucialJSON.put("description", crucialmd.getDescription());
+		crucialJSON.put("location",crucialmd.getLocation());
+		return crucialJSON;
 	}
 	
 	/**
-	 * Creates an instance of the JSONManipulator by initialising
-	 * the JSONObject field with a JSON object representation of 
-	 * the provided JSON string.
+	 * Method used to get a JSON String representation of a Code.Metadata.CrucialMetadata instance.
+	 * The JSON String has the followings (the ordering of the keys are not guaranteed, as 
+	 * JSON Objects are un-ordered,
+	 * 
+	 * <pre>
+	 * {
+     *    "location" : "<location-relative-to-base-path>",
+     *    "description": "<brief-description>",
+ 	 *    "title": "<title-of-code-block>"
+	 * }
+	 * </pre>
+	 * @param crucialmd
+	 * 				The Code.Metadata.CrucialMetadata instance that needs to be converted
+	 * to a JSON string.
+	 * 
+	 * @return
+	 * 			The String representation of the JSON which, typically, has a structure
+	 * described above. 
+	 */
+	public static String getJSONString(Code.Metadata.CrucialMetadata crucialmd) {
+		return getJSON(crucialmd).toString();
+	}
+	
+
+	/**
+	 * Method used to get a JSON String representation of a Code.CodeMetadata instance.
+	 * The JSON String has the followings (the ordering of the keys are not guaranteed, as 
+	 * JSON Objects are un-ordered,
+	 * 
+	 * <pre>
+	 * {
+     *    "headers": [
+     *       "header-1",
+     *       "header-2"
+	 *    ],
+     *    "documentation": "<documentation>",
+     *    "location" : "<location-relative-to-base-path>",
+     *    "description": "<brief-description>",
+ 	 *    "title": "<title-of-code-block>"
+	 * }
+	 * </pre>
+	 * 
 	 *  
-	 * @param jsonString 
-	 * 					The string representation using which the
-	 * JSONObject is initialised.
+	 * @param metadata 
+	 * 			The object representing the code's metadata 
+	 * @return
+	 * 			The String representing the JSON  representation of a Code's metadata. 
+	 * 		
 	 */
-	public JSONManipulator(String jsonString) {
-		json = new JSONObject(jsonString);
+	private String getJSONString(Code.Metadata metadata) {
+		
+		JSONObject metadataJSON = new JSONObject();
+		JSONObject crucialJSON = getJSON(metadata.getCrucialMetadata());  					
+		
+		metadataJSON.put("crucial", crucialJSON);
+		metadataJSON.put("documentation", metadata.getDocumentation());
+		metadataJSON.put("requiredHeaders", metadata.getHeaders());
+		
+		return metadataJSON.toString(3);
+		
 	}
 	
-	/**
-	 * Used to get the String representation of the JSONObject field.
-	 * 
-	 * @return
-	 * 			A string that represents the current state of the JSONObject field   
-	 */
-	public String getJSONString() {
-		return json.toString();
-	}
-	
-	/**
-	 * Appends (key, value) to the JSONObject field.
-	 * 
-	 * @param key 
-	 * 				key with which the specified value is to be associated
-	 * @param value
-	 * 				value to be associated with the specified key
-	 * 
-	 * @return
-	 * 			The handle of the JSONManipulator to allow nested 
-	 * operations.
-	 */
-	public JSONManipulator appendPair(String key, String value) {
-		json.put(key, value);
-		return this;		
-	}
-	
-	/**
-	 * Appends (key, JSONObject) pair the JSONObject field. The JSONObject is 
-	 * constructed from the Map of (String, String) pairs. 
-	 * 
-	 * @param key
-	 * 				key with which the specified JSONObject value is to be associated  
-	 * @param keyValues
-	 * 					Map of (String, String) values that would be used to create the JSONObject.
-	 * The JSONObject is associated with the key.
-	 * 
-	 * @return
-	 * 			The handle of the JSONManipulator to allow nested 
-	 * operations.
-	 */
-    public JSONManipulator appendMap(String key, Map<String, String> keyValues) {
-        json.put(key, keyValues);
-        return this;        
-    }
-    
-    /**
-     * Appends (key,array of JSON values) to the JSONObject field. The array of
-     * JSON values is constructed from the Collection.
-     * 
-     * @param key
-     * 				key with which the specified value is to be associated 
-     * @param arrayCollection
-     * 				Collection of values used to construct an array of JSON values
-     * 
-     * @return
-     * 			The handle of the JSONManipulator to allow nested 
-	 * operations.
-     */
-    public JSONManipulator appendArray(String key, Collection<?> arrayCollection) {
-      	json.put(key, arrayCollection);
-       	return this;
-    }
-    
-    /**
-     * Provides a Map of (String, String) pairs representing the JSON key value pairs.
-     * This should be used only when the JSONObject is known to contain only
-     * (String, String) pairs.
-     * 
-     * @return
-     * 			Map of (String, String) pairs
-     */
-    public Map<String,String> toCollection() {
-        
-    	Map<String, String> keyValues = new HashMap<>();
-        
-        for(String key : json.keySet()) {
-        	String value = json.getString(key);
-        	keyValues.put(key, value);
-        }
-        
-        return keyValues;
-    }
-    
-    /**
-     * The JSONObject field used for all operations.
-     */
-    private JSONObject json;
 }

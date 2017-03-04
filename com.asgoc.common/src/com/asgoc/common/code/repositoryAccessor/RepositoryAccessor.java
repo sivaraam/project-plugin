@@ -25,42 +25,49 @@ import static java.nio.file.StandardOpenOption.WRITE;
  * The user is freed from the work of <strong>resource handling</strong> as 
  * it is taken care by the implementation itself.
  * </p>
+ * 
  * @author Kaartic Sivaraam
  */
 public class RepositoryAccessor {
 
     /**
      * 
-     * @param base The base <em> path </em> of the repository (directory) relative to which 
+     * @param basePath 
+     * 				The base <em> path </em> of the repository (directory) relative to which 
      * all methods (unless otherwise noted) perform their operations.
      * 
-     * @throws InvalidRepositoryOperation The constructor throws when the given
-     * base path does not exist.
+     * @throws InvalidRepositoryOperation 
+     * 				The constructor throws when the given base path does not exist.
      */
-    public RepositoryAccessor(String base) throws InvalidRepositoryOperation {
-        basePath = Paths.get(base);
-        if(Files.notExists(basePath)) {
-		throw new InvalidRepositoryOperation ("The Base Path does not exist");
+	public RepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
+		if(Files.notExists(Paths.get(basePath))) {
+			this.basePath = null;
+        	throw new InvalidRepositoryOperation ("The base path does not exist");
+		}
+        this.basePath = Paths.get(basePath);
 	}
-    }
 	
     /**
      * This method reads contents from the <code> source </code> and returns the
      * contents as a <code> StringBuilder </code>.
      * 
-     * @param source It is the <em> path </em> of the source file relative to
-     * the {@link #basePath}
-     * @return <code> StringBuilder </code> The contents of the file are returned as 
-     * a <code> StringBuilder </code>.
-     * @throws InvalidRepositoryOperation This method throws this class when,
+     * @param relativeSource 
+     * 				It is the <em> path </em> of the source file <strong> relative </strong>
+     * to the {@link #basePath}.
+     * 
+     * @return 
+     * 			The contents of the file are returned as a <code> StringBuilder </code>.
+     * 
+     * @throws InvalidRepositoryOperation
+     *			This method throws this class when,
      * <ul>
      *         <li> the file does not exist
      *         <li> an <code> IOException </code> occurs during a file operation
      * </ul>
      */
-    public StringBuilder readFromFile(String source) throws InvalidRepositoryOperation {
-        Path sourcePath = Paths.get(basePath.toString(), source);
-	if(Files.notExists(sourcePath))
+    public StringBuilder readFromFile(Path relativeSource) throws InvalidRepositoryOperation {
+        Path sourcePath = basePath.resolve(relativeSource);
+        if(Files.notExists(sourcePath))
             throw new InvalidRepositoryOperation ("File does not exist");
 	
         StringBuilder fileContents = new StringBuilder();
@@ -83,11 +90,14 @@ public class RepositoryAccessor {
      * This method writes the contents of the provided <code> String </code>, to the 
      * a file with the provided <code> fileName </code> which is, assumed to not
      * exist before invocation.
+     *
+     * @param relativeDestination 
+     * 				The <em> name of file </em> which is to be created. The file
+     * would be created in the base path.
      * 
-     * @param fileName The <em> name of file </em> which is to be created. The 
-     * file would be created in the base path.
-     * @param contentsToWrite The <code> String </code>containing the contents to be
-     * written to the file.
+     * @param contentsToWrite 
+     * 				The <code> String </code>containing the contents to be written
+     * to the file.
      * 
      * @throws InvalidRepositoryOperation This method throws when,
      * <ul>
@@ -96,9 +106,9 @@ public class RepositoryAccessor {
      *     <li> an <code> IOException </code> occurs during File write operation
      * </ul>
      */
-    public void writeToNewFile(String fileName, String contentsToWrite) throws InvalidRepositoryOperation {
-        Path destinationPath = Paths.get(basePath.toString(), fileName);
+    public void writeToNewFile(Path relativeDestination, String contentsToWrite) throws InvalidRepositoryOperation {
         
+    	Path destinationPath = basePath.resolve(relativeDestination);
         if(Files.notExists(destinationPath.getParent())) {
             throw new InvalidRepositoryOperation ("Parent of file does not exist");
         }
@@ -115,20 +125,24 @@ public class RepositoryAccessor {
      * This method writes the contents of the provided <code> String </code>, to the 
      * <code> destination </code> which is assumed to, exist before invocation.
      * 
-     * @param fileName The <em> name of the file </em> to which contents would 
-     * be appended. The file must exist before trying to append to it.
-     * @param contentsToWrite The <code> String </code> containing the contents to be
-     * written to the file.
+     * @param relativeDestination 
+     * 				The <em> name of the file </em> to which contents would be appended.
+     *  The file must exist before trying to append to it.
+     *  
+     * @param contentsToAppend
+     * 				The <code> String </code> containing the contents to be written 
+     * to the file.
      * 
-     * @throws InvalidRepositoryOperation This method throws when,
+     * @throws InvalidRepositoryOperation 
+     * 				This method throws when,
      * <ul>
      *         <li> the Parent of the file doesn't exist
      *         <li> the file does not exist
      *         <li> an <code> IOException </code> occurs during File write operation
      * </ul>
      */
-     public void appendToFile(String fileName, String contentsToWrite) throws InvalidRepositoryOperation {
-        Path destinationPath = Paths.get(basePath.toString(), fileName);
+     public void appendToFile(String relativeDestination, String contentsToAppend) throws InvalidRepositoryOperation {
+        Path destinationPath = Paths.get(basePath.toString(), relativeDestination);
         
         if(Files.notExists(destinationPath.getParent())) {
             throw new InvalidRepositoryOperation ("Parent of file does not exist");
@@ -138,10 +152,9 @@ public class RepositoryAccessor {
             throw new InvalidRepositoryOperation ("File does not exist");
         }
         
-        byte[] contentsAsBytes = contentsToWrite.getBytes();
         try ( OutputStream out = Files.newOutputStream(destinationPath, WRITE, APPEND);
-        		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"))) {
-            out.write(contentsAsBytes, 0, contentsAsBytes.length);
+        	  BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"))) {
+            writer.write(contentsToAppend);
         }
         catch (IOException ex) {
             throw new InvalidRepositoryOperation ("IOException when trying to write to file\n" + ex.getMessage());
