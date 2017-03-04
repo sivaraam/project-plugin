@@ -22,5 +22,5 @@ public class InvalidRepositoryOperation extends Exception{
             return reason+((super.getMessage() != null) ? super.getMessage() : "");
 	}
 	
-	private String reason;
+	String reason;
 }

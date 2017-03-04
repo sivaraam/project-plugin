@@ -39,7 +39,7 @@ public class RepositoryAccessor {
      */
     public RepositoryAccessor(String base) throws InvalidRepositoryOperation {
         basePath = Paths.get(base);
-	if(Files.notExists(basePath)) {
+        if(Files.notExists(basePath)) {
 		throw new InvalidRepositoryOperation ("The Base Path does not exist");
 	}
     }
