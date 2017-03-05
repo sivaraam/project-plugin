@@ -70,18 +70,6 @@ public final class Code {
 			this.requiredHeaders = requiredHeaders;
 		}
 		
-		public String getTitle() {
-			return crucialMetadata.title;
-		}
-		
-		public StringBuilder getDescription() {
-			return crucialMetadata.description;
-		}
-		
-		public Path getLocation() {
-			return crucialMetadata.relativeLocation;
-		}
-		
 		public CrucialMetadata getCrucialMetadata() {
 			return crucialMetadata;
 		}
@@ -119,26 +107,6 @@ public final class Code {
 				Path relativeLocation, StringBuilder codeBlock) {
 		this.metadata = new Metadata(title, description, documentation, requiredHeaders, relativeLocation); 
 		this.codeBlock = codeBlock;
-	}
-	
-	public String getTitle() {
-		return metadata.crucialMetadata.title;
-	}
-	
-	public StringBuilder getDescription() {
-		return metadata.crucialMetadata.description;
-	}
-	
-	public Path getLocation() {
-		return metadata.crucialMetadata.relativeLocation;
-	}
-	
-	public StringBuilder getDocumentation() {
-		return metadata.documentation;
-	}
-
-	public List<String> getHeaders() {
-		return metadata.requiredHeaders;
 	}
 	
 	public Metadata getMetadata() {
