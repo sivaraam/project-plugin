@@ -15,7 +15,7 @@ public final class CodeRepositoryAccessorFactory {
 	 * Provides an instance of the CodeRepositoryAccessor factory.
 	 * 
 	 * @return
-	 * 			An instance of CodeRepositoryAccessorFactory
+	 * 		A <em> Singleton </em> instance of CodeRepositoryAccessorFactory
 	 */
 	public static CodeRepositoryAccessorFactory getInstance() {
 		if (instance == null)
@@ -38,13 +38,10 @@ public final class CodeRepositoryAccessorFactory {
 	 * 				Thrown in case of an invalid repository operation.
 	 */
 	public CodeRepositoryAccessor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
-		if(craInstance == null) {
-			craInstance = new ConcreteCodeRepositoryAccessor(basePath);
-		}
 		
-		return craInstance;
+		return new ConcreteCodeRepositoryAccessor(basePath);
+		
 	}
 	
-	private CodeRepositoryAccessor craInstance; 
 	private static CodeRepositoryAccessorFactory instance;
 }

@@ -1,67 +1,43 @@
 package com.asgoc.common.code.json;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-import org.json.JSONObject;
 
 /**
- * Class that serves as a wrapper for the JSON creation and manipulation library. 
- * It provides an interface only to a small portion of the library that is required.
- * 
- * Most of the methods return the instance of the JSONManipulator used to invoke them
- * to allow nesting of calls.
+ * Interface that specifies the required contract for a JSON manipulator.
+ * Most methods return references of instances which were used to call them 
+ * to allow nesting of method calls.
  * 
  * @author Kaartic Sivaraam
+ *
  */
-public class JSONManipulator {
-/**
-	 * Creates an instance of the JSONManipulator by creating a 
-	 * JSONObject with it's default constructor.
-	 */
-	public JSONManipulator() {
-		json = new JSONObject();
-	}
-	
+public interface JSONManipulator {
+
 	/**
-	 * Creates an instance of the JSONManipulator by initialising
-	 * the JSONObject field with a JSON object representation of 
-	 * the provided Object
-	 *  
-	 * @param jsonString 
-	 * 					The object using which the JSONObject 
-	 * is initialised.
-	 */
-	public JSONManipulator(Object obj) {
-		json = new JSONObject(obj);
-	}
-	
-	/**
-	 * Used to get the String representation of the JSONObject field.
+	 * Provides the String representation of the JSON representation.
 	 * 
 	 * @return
-	 * 			A string that represents the current state of the JSONObject field   
+	 * 			A string that represents the current state of the 
+	 * JSON representation.  
 	 */
-	public String toString() {
-		return json.toString();
-	}
+	public String toString();
 	
 	/**
-	 * Used to get the <em> pretty-printed </em> String representation of the JSONObject field.
+	 * Provides the <em> pretty-printed </em> String representation 
+	 * of the JSONObject field.
 	 * 
 	 * @param indentFactor
-	 * 						The indentFactor used to generate the pretty-printed JSON string.		
+	 * 						The indentFactor used to generate the
+	 *  pretty-printed JSON string.		
 	 * 	
 	 * @return
-	 * 			A string that represents the current state of the JSONObject field, pretty-printed 
-	 * with specified indents.  
+	 * 			A string that represents the current state of the JSON 
+	 * representation, pretty-printed with specified indents.  
 	 */
-	public String toString(int indentFactor) {
-		return json.toString(indentFactor);
-	}
+	public String toString(int indentFactor);
 	
 	/**
-	 * Appends (key, value) to the JSONObject field.
+	 * Appends (key, value) to the JSON representation.
 	 * 
 	 * @param key 
 	 * 				key with which the specified value is to be associated
@@ -72,70 +48,42 @@ public class JSONManipulator {
 	 * 			The handle of the JSONManipulator to allow nested 
 	 * operations.
 	 */
-	public JSONManipulator appendPair(String key, Object value) {
-		json.put(key, value);
-		return this;		
-	}
+	public JSONManipulator appendPair(String key, Object bean);
 	
 	/**
-	 * Appends (key, JSONObject) pair the JSONObject field. The JSONObject is 
-	 * constructed from the Map of (String, String) pairs. 
-	 * 
-	 * @param key
-	 * 				key with which the specified JSONObject value is to be associated  
-	 * @param keyValues
-	 * 					Map of (String, String) values that would be used to create the JSONObject.
-	 * The JSONObject is associated with the key.
-	 * 
-	 * @return
-	 * 			The handle of the JSONManipulator to allow nested 
-	 * operations.
-	 */
-    public JSONManipulator appendMap(String key, Map<String, String> keyValues) {
-        json.put(key, keyValues);
-        return this;        
-    }
-    
-    /**
-     * Appends (key,array of JSON values) to the JSONObject field. The array of
-     * JSON values is constructed from the Collection.
+     * Appends (key, array of JSON values) to the JSON representation.
+     * The JSON values is constructed from the Collection.
      * 
      * @param key
-     * 				key with which the specified value is to be associated 
+     * 				key with which the specified array of JSON values are
+     * to be associated
+     * 
      * @param arrayCollection
-     * 				Collection of values used to construct an array of JSON values
+     * 				Collection of values used to construct an array of 
+     * JSON values
      * 
      * @return
      * 			The handle of the JSONManipulator to allow nested 
 	 * operations.
      */
-    public JSONManipulator appendArray(String key, Collection<?> arrayCollection) {
-      	json.put(key, arrayCollection);
-       	return this;
-    }
-    
-    /**
-     * Provides a Map of (String, String) pairs representing the JSON key value pairs.
-     * This should be used only when the JSONObject is known to contain only
-     * (String, String) pairs.
-     * 
-     * @return
-     * 			Map of (String, String) pairs
-     */
-    public Map<String,String> toCollection() {
-        
-    	Map<String, String> keyValues = new HashMap<>();
-        
-        for(String key : json.keySet()) {
-        	String value = json.getString(key);
-        	keyValues.put(key, value);
-        }
-        
-        return keyValues;
-    }
-        
-    /**
-     * The JSONObject field used for all operations.
-     */
-    private JSONObject json;
+	public JSONManipulator appendArray(String key, Collection<?> array);
+	
+	/**
+	 * Appends (key, JSON representation) to the JSON representation. The 
+	 * JSON representation is constructed from the Map. The key is associated with
+	 * the constructed JSON representation.
+	 * 
+	 * @param key
+	 * 				key with which the provided Map (that would be converted to a
+	 *  JSON representation) would be associated.  
+	 * 
+	 * @param keyValues
+	 * 					Map of (key, value) pairs that constitute the value of the
+	 *  provided key. The Map would be converted to a JSON representation.
+	 * 
+	 * @return
+	 * 			The handle of the JSONManipulator to allow nested operations.
+	 */
+	public JSONManipulator appendMap(String key, Map<? , ?> map);
+
 }
