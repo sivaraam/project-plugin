@@ -1,4 +1,4 @@
-package com.asgoc.common.code.jsonManipulator;
+package com.asgoc.common.code.json;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.asgoc.common.code.repositoryAccessor;
+package com.asgoc.common.code.repository;
 
 /**
  * Class thrown by <code> RepositoryAccessor </code> in cases of an exception.

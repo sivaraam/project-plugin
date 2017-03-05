@@ -1,4 +1,4 @@
-package com.asgoc.common.code.repositoryAccessor;
+package com.asgoc.common.code.repository;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,7 +19,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
  * 
  * This is done to abstract away the work done to access files. This class is 
  * used to access a repository. It allows the user to read and write contents 
- * from files in the repository. Al operations are done relative to the 
+ * from files in the repository. All operations are done relative to the 
  * {@link #basePath} of the instance.
  * <p>
  * The user is freed from the work of <strong>resource handling</strong> as 
