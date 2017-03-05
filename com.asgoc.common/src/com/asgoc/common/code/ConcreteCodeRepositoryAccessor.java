@@ -2,7 +2,10 @@ package com.asgoc.common.code;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +49,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
      *    ],
      *    "documentation": "documentation",
      *    "crucialMetadata": {
-     *       "description": "\"brief-descitpion-of-code",
+     *       "description": "brief-description-of-code",
      *       "location": "/path/to/code",
      *       "title": "title-of-code"
      *    }
@@ -65,8 +68,8 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 	 */
 	private void storeMetadata(Path metadataLocation, Code.Metadata metadata) throws InvalidRepositoryOperation {
 		
-		jsonManip = jsonManipProvider.getConcreteJSONManipulator(metadata);
-		String metadataString = jsonManip.toString(3);
+		JSONManipulatorAdaptor metdataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadata);
+		String metadataString = metdataJSONManip.toString(3);
 		repoAccessor.writeToNewFile(metadataLocation, metadataString);
 		
 	}
@@ -114,22 +117,22 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 			indexString = repoAccessor.readFromFile(indexLocation).toString();
 			
 			//Append the data about new index file to obtained JSON
-			jsonManip = jsonManipProvider.getConcreteJSONManipulator(indexString);
-			jsonManip.appendMap(crucialMd.getLocation().toString(), hmap);
+			JSONManipulatorAdaptor indexJSONManip = jsonManipProvider.getConcreteJSONManipulator(indexString);
+			indexJSONManip.appendMap(crucialMd.getLocation().toString(), hmap);
 			
 			//write new JSON String back to file
-			indexString = jsonManip.toString(3);
+			indexString = indexJSONManip.toString(3);
 			repoAccessor.appendToFile(indexLocation, indexString);
 		}
 		catch(InvalidRepositoryOperation iro) {
 			//If Index file does not exist create it (should occur only once)
 			if(iro.getMessage().equals("File does not exist")) {
 				//Add the JSON representation for the string
-				jsonManip = jsonManipProvider.getConcreteJSONManipulator();
-				jsonManip.appendMap(crucialMd.getLocation().toString(),hmap);
+				JSONManipulatorAdaptor newIndexJSONManip = jsonManipProvider.getConcreteJSONManipulator();
+				newIndexJSONManip.appendMap(crucialMd.getLocation().toString(),hmap);
 				
 				//Write JSON to new file
-				indexString = jsonManip.toString(3); 
+				indexString = newIndexJSONManip.toString(3); 
 				repoAccessor.writeToNewFile(indexLocation, indexString);
 			}
 			else 
@@ -163,19 +166,114 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 		
 	}
 
+	/**
+	 * Provides the crucial metdata representation of the given JSON string
+	 *  
+	 * @param crucialMetadataJSON 
+	 * 			String representation of the JSON that was formed from a 
+	 * Code.Metdata.CrucialMetadata instance
+	 * 
+	 * @return
+	 * 			Code.Metadata.CrucailMetadata instance representation of the given JSON 
+	 * string
+	 * 	
+	 */
+	private Code.Metadata.CrucialMetadata getCrucialMetadata(String crucialMetdataJSON) {
+		JSONManipulatorAdaptor crucialMDJSONManip = jsonManipProvider.getConcreteJSONManipulator(crucialMetdataJSON);
+		
+		String title = crucialMDJSONManip.getString("title");
+		StringBuilder description = new StringBuilder(crucialMDJSONManip.getString("description"));
+		Path location = Paths.get(crucialMDJSONManip.getString("location"));
+		
+		return new Code.Metadata.CrucialMetadata(title, description, location);
+		
+	}
 	
-/*	
-	public Code getCode(Path location) {
-	
+	/**
+	 * Provides the Code.Metadata representation of the given JSON string
+	 *  
+	 * @param metadataJSON 
+	 * 			String representation of the JSON that was formed from a 
+	 * Code.Metdata instance
+	 * 
+	 * @return
+	 * 			Code.Metadata instance representation of the given JSON 
+	 * string
+	 * 	
+	 */
+	private Code.Metadata getMetadata(String metdataJSON) {
+		JSONManipulatorAdaptor metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metdataJSON);
+		
+		String crucialMetadataJSON = metadataJSONManip.getString("crucialMetadata");
+		StringBuilder documentation = new StringBuilder(metadataJSONManip.getString("documentation"));
+		Collection<?> array = metadataJSONManip.getArray("headers");
+		Collection<String> headers = new ArrayList(array);
+		
+		return new Code.Metadata(getCrucialMetadata(crucialMetadataJSON),documentation, headers);
+	}
+ 
+	/**
+	 * Provides the Code representation for the code found at the specified location.
+	 * 
+	 * @param location 
+	 * 			location of the code block
+	 * 
+	 * @return
+	 * 			Code representation of the code found in the given location
+	 * 
+	 * @throws InvalidRepositoryOperation
+	 * 			Thrown when the invalid repository operations are performed. 
+	 * For more information refer documentation of RepositoryAccessorAdaptor class.
+	 */
+ 	public Code getCode(Path location) throws InvalidRepositoryOperation {
+ 		Path codeLocation = location;
+ 		//TODO: correct after removal the extension from file name
+		Path metadataLocation = Paths.get(location.toString()+"-metadata.json");
+		
+		StringBuilder codeBlock = repoAccessor.readFromFile(codeLocation);
+		StringBuilder metadataJSON = repoAccessor.readFromFile(metadataLocation);
+		
+		return new Code(getMetadata(metadataJSON.toString()), codeBlock);
+		
 	}
 
-	public List<Code.Metadata.CrucialMetadata> getCrucialMetadata(Path location) {
+	/**
+	 * Provides the list of crucial metadata about the codes found in the provided location.
+	 * 
+	 * 
+	 * @param location 
+	 * 				Location for which the crucial metadata list is to be generated. If the 
+	 * codes are in the base path of the repository, then pass an empty string for the location.
+	 * 
+	 * @return
+	 * 			List of Code.Metdata.CrucialMetdata objects that represent the crucial 
+	 * metadata of the codes found in the given location.
+	 * 
+	 * @throws InvalidRepositoryOperation
+	 * 			Thrown when the invalid repository operations are performed. 
+	 * For more information refer documentation of RepositoryAccessorAdaptor class. 
+	 * 
+	 */
+	public List<Code.Metadata.CrucialMetadata> getCrucialMetadata(Path location) throws InvalidRepositoryOperation {
 		Path indexLocation = Paths.get( (location.toString() != "" ? location.toString() : "") + "index.json" );
-		StringBuilder index
+		StringBuilder indexJSON = repoAccessor.readFromFile(indexLocation);
+		List<Code.Metadata.CrucialMetadata> crucialMetadataList = new ArrayList<> ();
+		JSONManipulatorAdaptor metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(indexJSON.toString());
+		
+		for(Iterator<String> keys = metadataJSONManip.getKeys(); keys.hasNext(); ) {
+			
+			String title = keys.next();
+			JSONManipulatorAdaptor value = jsonManipProvider.getConcreteJSONManipulator(metadataJSONManip.get(title));
+			StringBuilder description = new StringBuilder(value.get("description").toString());
+			Path locationOfCode = Paths.get(value.get("location").toString());
+			
+			crucialMetadataList.add(new Code.Metadata.CrucialMetadata(title, description, locationOfCode));
+		}
+		
+		return crucialMetadataList;
 	}
-*/
-	private JSONManipulatorFactory jsonManipProvider;
-	private JSONManipulatorAdaptor jsonManip; 
+
+	private JSONManipulatorFactory jsonManipProvider; 
 	private RepositoryAccessorAdaptor repoAccessor;
 
 }
