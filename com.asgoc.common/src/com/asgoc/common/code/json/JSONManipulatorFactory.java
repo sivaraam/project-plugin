@@ -38,6 +38,23 @@ public class JSONManipulatorFactory {
 	/**
 	 * Provides an instance of the ConcreteJSONManipulator class, 
 	 * one of the implementations of the JSONManipulatorAdaptor interface,
+	 * that gets a String parameter. 
+	 * 
+	 * @param initialiserString
+	 * 		Initialiser passed to the ConcreteJSONManipulator class.
+	 * 
+	 * @return
+	 * 		An instance of the ConcreteJSONManipulator class
+	 */
+	public JSONManipulatorAdaptor getConcreteJSONManipulator(String initialiserString) {
+		
+		return new ConcreteJSONManipulator(initialiserString);
+		
+	}
+	
+	/**
+	 * Provides an instance of the ConcreteJSONManipulator class, 
+	 * one of the implementations of the JSONManipulatorAdaptor interface,
 	 * that gets an Object a parameter. 
 	 * 
 	 * @param initialiser 

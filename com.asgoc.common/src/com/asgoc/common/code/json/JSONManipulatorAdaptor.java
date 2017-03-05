@@ -1,6 +1,7 @@
 package com.asgoc.common.code.json;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -13,41 +14,7 @@ import java.util.Map;
  */
 public interface JSONManipulatorAdaptor {
 
-	/**
-	 * Provides the String representation of the JSON representation.
-	 * 
-	 * @return
-	 * 			A string that represents the current state of the 
-	 * JSON representation.  
-	 */
-	public String toString();
-	
-	/**
-	 * Provides the <em> pretty-printed </em> String representation 
-	 * of the JSONObject field.
-	 * 
-	 * @param indentFactor
-	 * 						The indentFactor used to generate the
-	 *  pretty-printed JSON string.		
-	 * 	
-	 * @return
-	 * 			A string that represents the current state of the JSON 
-	 * representation, pretty-printed with specified indents.  
-	 */
-	public String toString(int indentFactor);
-	
-	/**
-	 * Appends (key, value) to the JSON representation.
-	 * 
-	 * @param key 
-	 * 				key with which the specified value is to be associated
-	 * @param bean
-	 * 				value to be associated with the specified key
-	 * 
-	 * @return
-	 * 			The handle of the JSONManipulatorAdaptor to allow nested 
-	 * operations.
-	 */
+	//================= Manipulating Methods - Start =========================
 	public JSONManipulatorAdaptor appendPair(String key, Object bean);
 	
 	/**
@@ -85,5 +52,99 @@ public interface JSONManipulatorAdaptor {
 	 * 			The handle of the JSONManipulatorAdaptor to allow nested operations.
 	 */
 	public JSONManipulatorAdaptor appendMap(String key, Map<? , ?> keyValues);
+	//===================== Manipulating methods - End =========================
+	
+	
+	//====================== Accessing Methods - Start===========================
+	
+	/**
+	 * Provides the String representation of the JSON representation.
+	 * 
+	 * @return
+	 * 			A string that represents the current state of the 
+	 * JSON representation.  
+	 */
+	@Override
+	public String toString();
+	
+	/**
+	 * Provides the <em> pretty-printed </em> String representation 
+	 * of the JSONObject field.
+	 * 
+	 * @param indentFactor
+	 * 						The indentFactor used to generate the
+	 *  pretty-printed JSON string.		
+	 * 	
+	 * @return
+	 * 			A string that represents the current state of the JSON 
+	 * representation, pretty-printed with specified indents.  
+	 */
+	public String toString(int indentFactor);
+	
+	/**
+	 * Appends (key, value) to the JSON representation.
+	 * 
+	 * @param key 
+	 * 				key with which the specified value is to be associated
+	 * @param bean
+	 * 				value to be associated with the specified key
+	 * 
+	 * @return
+	 * 			The handle of the JSONManipulatorAdaptor to allow nested 
+	 * operations.
+	 */
+	
+	/**
+	 * Provides the number of keys in the JSON representation
+	 * 
+	 * @return
+	 * 			the number of keys in the JSON representation
+	 */
+	public int length();
+	
+	/**
+	 * Provides the value of the given key in the JSON representation
+	 * 
+	 * @param key
+	 * 			key used to find the value
+	 * 
+	 * @return
+	 * 			value corresponding to the given key
+	 */
+	public Object get(String key);
+	
+	/**
+	 * Provides the String associated with the given key in the 
+	 * JSON representation.
+	 * 
+	 * @param key
+	 * 			key used to get the String value
+	 * 
+	 * @return
+	 * 			String associated with the given key
+	 */
+	public String getString(String key);
+	
+	/**
+	 * Provides an enumeration of the keys in the JSON representation.
+	 * 
+	 * @return
+	 * 		Iterator that enumerates the keys present in the JSON 
+	 * representation.
+	 */
+	public Iterator<String> getKeys();
+
+	/**
+	 * Provides a collection of the array of JSON values which have the 
+	 * same type.
+	 * 
+	 * @param key
+	 * 			key which has as it's value an array of JSON objects
+	 * of the same type 
+	 * 
+	 * @return
+	 * 			Collection of JSON values
+	 */
+	public Collection<?> getArray(String key);
 
 }

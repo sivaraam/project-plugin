@@ -1,7 +1,11 @@
 package com.asgoc.common.code.json;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -26,43 +30,27 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	/**
 	 * Creates an instance of the ConcreteJSONManipulator by initialising
 	 * the JSONObject field with a JSON object representation of 
-	 * the provided Object
+	 * the provided String
+	 * @param sourceJSON
+	 */
+	public ConcreteJSONManipulator(String sourceJSON) {
+		json = new JSONObject(sourceJSON);
+	}
+	
+	/**
+	 * Creates an instance of the ConcreteJSONManipulator by initialising
+	 * the JSONObject field with a JSON object representation of 
+	 * the provided Object. The keys and values are found using bean getters.
 	 *  
 	 * @param obj 
-	 * 					The object using which the JSONObject 
+	 * 					The string using which the JSONObject 
 	 * is initialised.
 	 */
 	public ConcreteJSONManipulator(Object obj) {
 		json = new JSONObject(obj);
 	}
 	
-	/**
-	 * Provides the String representation of the JSONObject field.
-	 * 
-	 * @return
-	 * 			A string that represents the current state of the 
-	 * JSONObject field.
-	 */
-	public String toString() {
-		return json.toString();
-	}
-	
-	/**
-	 * Provides a <em> pretty-printed </em> String representation 
-	 * of the JSONObject field.
-	 * 
-	 * @param indentFactor
-	 * 						The indentFactor used to generate 
-	 * the pretty-printed JSON string.		
-	 * 	
-	 * @return
-	 * 			A string that represents the current state of the 
-	 * JSONObject field, pretty-printed with specified indents.  
-	 */
-	public String toString(int indentFactor) {
-		return json.toString(indentFactor);
-	}
-	
+	//=================== Manipulating Methods - Start =========================
 	/**
 	 * Appends (key, value) to the JSONObject field.
 	 * 
@@ -121,30 +109,111 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
         json.put(key, keyValues);
         return this;        
     }
+    //================= Manipulating Methods - End =========================
     
-    /*
-    /**
-     * Provides a Map of (String, String) pairs representing the JSON key value pairs.
-     * This should be used only when the JSONObject is known to contain only
-     * (String, String) pairs.
-     * 
-     * @return
-     * 			Map of (String, String) pairs
-     
-    public Map<String,String> toCollection() {
-        
-    	Map<String, String> keyValues = new HashMap<>();
-        
-        for(String key : json.keySet()) {
-        	String value = json.getString(key);
-        	keyValues.put(key, value);
-        }
-        
-        return keyValues;
-    }
-        */
+    //====================== Accessing Methods - Start======================    
+	/**
+	 * Provides the String representation of the JSONObject field.
+	 * 
+	 * @return
+	 * 			A string that represents the current state of the 
+	 * JSONObject field.
+	 */
+	@Override
+	public String toString() {
+		return json.toString();
+	}
+	
+	/**
+	 * Provides a <em> pretty-printed </em> String representation 
+	 * of the JSONObject field.
+	 * 
+	 * @param indentFactor
+	 * 						The indentFactor used to generate 
+	 * the pretty-printed JSON string.		
+	 * 	
+	 * @return
+	 * 			A string that represents the current state of the 
+	 * JSONObject field, pretty-printed with specified indents.  
+	 */
+	@Override
+	public String toString(int indentFactor) {
+		return json.toString(indentFactor);
+	}
+	
+	/**
+	 * Provides the number of keys in the JSONObject field.
+	 * 
+	 * @return
+	 * 			the number of keys in the JSONObject field
+	 */
+	public int length() {
+		return json.length();
+	}
+	
+	/**
+	 * Provides the value of the given key in the JSONObject field.
+	 * 
+	 * @param key
+	 * 			key used to find the value
+	 * 
+	 * @return
+	 * 			value corresponding to the given key
+	 */
+	public Object get(String key) {
+		return json.get(key);
+	}
+	
+	/**
+	 * Provides the String associated with the given key in the 
+	 * JSONObject field.
+	 * 
+	 * @param key
+	 * 			key used to get the String value
+	 * 
+	 * @return
+	 * 			String associated with the given key
+	 */
+	public String getString(String key) {
+		return json.getString(key);
+	}
+	
+	/**
+	 * Provides an enumeration of the keys in the JSONObject field.
+	 * 
+	 * @return
+	 * 		Iterator that enumerates the keys present in the JSONObject field
+	 */
+	public Iterator<String> getKeys() {
+		return json.keys();
+	}
+	
+	/**
+	 * Provides a collection of the array of JSON values which are of 
+	 * String type.
+	 * 
+	 * @param key
+	 * 			key which has as it's value an array of JSON objects
+	 * of the same type 
+	 * 
+	 * @return
+	 * 			Collection of JSON values
+	 */
+	public Collection<String> getArray(String key) {
+		JSONArray array = json.getJSONArray(key);
+		Collection<String> jsonValues = new ArrayList<>();
+		
+		for(Iterator<Object> arrayIter = array.iterator(); arrayIter.hasNext(); ) {
+			jsonValues.add(arrayIter.next().toString());
+		}
+		
+		return jsonValues;
+	}
+
+	//====================== Accessing Methods - End======================
+	
     /**
      * The JSONObject field used for all operations.
      */
-    private JSONObject json;
+    private final JSONObject json;
 }
