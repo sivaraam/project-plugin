@@ -41,7 +41,7 @@ public interface JSONManipulatorAdaptor {
 	 * 
 	 * @param key 
 	 * 				key with which the specified value is to be associated
-	 * @param value
+	 * @param bean
 	 * 				value to be associated with the specified key
 	 * 
 	 * @return
@@ -66,7 +66,7 @@ public interface JSONManipulatorAdaptor {
      * 			The handle of the JSONManipulatorAdaptor to allow nested 
 	 * operations.
      */
-	public JSONManipulatorAdaptor appendArray(String key, Collection<?> array);
+	public JSONManipulatorAdaptor appendArray(String key, Collection<?> arrayCollection);
 	
 	/**
 	 * Appends (key, JSON representation) to the JSON representation. The 
@@ -84,6 +84,6 @@ public interface JSONManipulatorAdaptor {
 	 * @return
 	 * 			The handle of the JSONManipulatorAdaptor to allow nested operations.
 	 */
-	public JSONManipulatorAdaptor appendMap(String key, Map<? , ?> map);
+	public JSONManipulatorAdaptor appendMap(String key, Map<? , ?> keyValues);
 
 }

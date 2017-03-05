@@ -28,7 +28,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * the JSONObject field with a JSON object representation of 
 	 * the provided Object
 	 *  
-	 * @param jsonString 
+	 * @param obj 
 	 * 					The object using which the JSONObject 
 	 * is initialised.
 	 */
