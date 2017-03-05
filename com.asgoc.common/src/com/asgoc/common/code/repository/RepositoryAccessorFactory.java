@@ -42,5 +42,10 @@ public final class RepositoryAccessorFactory {
 		return new BufferedRepositoryAccessor(basePath);
 	}
 
+	//Prevent the instantiation of the factory
+	private RepositoryAccessorFactory() {
+		
+	}
+	
 	private static RepositoryAccessorFactory instance;
 }

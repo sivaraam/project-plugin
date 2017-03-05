@@ -30,10 +30,8 @@ public class JSONManipulatorFactory {
 	 * 		An instance of the ConcreteJSONManipulator class
 	 */
 	public JSONManipulatorAdaptor getConcreteJSONManipulator() {
-		//Cache values as it would not have any side effect.
-		if(manipulatorCache == null)
-			manipulatorCache = new ConcreteJSONManipulator();
-		return manipulatorCache;
+		
+		return new ConcreteJSONManipulator();
 		
 	}
 	
@@ -54,6 +52,10 @@ public class JSONManipulatorFactory {
 		
 	}
 	
-	private JSONManipulatorAdaptor manipulatorCache;
+	//Prevent the instantiation of the factory
+	private JSONManipulatorFactory() {
+		
+	}
+
 	private static JSONManipulatorFactory instance;
 }

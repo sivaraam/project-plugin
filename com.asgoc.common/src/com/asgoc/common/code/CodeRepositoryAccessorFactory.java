@@ -10,7 +10,7 @@ import com.asgoc.common.code.repository.InvalidRepositoryOperation;
  *
  */
 public final class CodeRepositoryAccessorFactory {
-	
+
 	/**
 	 * Provides an instance of the CodeRepositoryAccessorAdaptor factory.
 	 * 
@@ -41,6 +41,11 @@ public final class CodeRepositoryAccessorFactory {
 		
 		return new ConcreteCodeRepositoryAccessor(basePath);
 		
+	}
+
+	//prevent the instantiation of the Factory class
+	private CodeRepositoryAccessorFactory() {
+			
 	}
 	
 	private static CodeRepositoryAccessorFactory instance;
