@@ -1,6 +1,7 @@
 package com.asgoc.common.code;
 
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public final class Code {
 		 */
 		public static final class CrucialMetadata {
 			
-			CrucialMetadata (String title, StringBuilder description, Path relativeLocation) {
+			public CrucialMetadata (String title, StringBuilder description, Path relativeLocation) {
 				this.title = title;
 				this.description = description;
 				this.relativeLocation = relativeLocation;
@@ -70,6 +71,14 @@ public final class Code {
 			this.requiredHeaders = requiredHeaders;
 		}
 		
+		Metadata(CrucialMetadata crucialMetadata,
+				 StringBuilder documentation,
+				 Collection<String> headers) {
+			this.crucialMetadata = crucialMetadata;
+			this.documentation = documentation;
+			this.requiredHeaders = headers;
+		}
+		
 		public CrucialMetadata getCrucialMetadata() {
 			return crucialMetadata;
 		}
@@ -78,7 +87,7 @@ public final class Code {
 			return documentation;
 		}
 
-		public List<String> getHeaders() {
+		public Collection<String> getHeaders() {
 			return requiredHeaders;
 		}
 			
@@ -95,10 +104,10 @@ public final class Code {
 		StringBuilder documentation;
 		
 		/**
-		 * The list representing the header files required for 
+		 * The collection representing the header files required for 
 		 * the proper working of the code block.
 		 */
-		List<String> requiredHeaders;
+		Collection<String> requiredHeaders;
 		
 	}
 	
@@ -106,6 +115,12 @@ public final class Code {
 				StringBuilder documentation, List<String> requiredHeaders,
 				Path relativeLocation, StringBuilder codeBlock) {
 		this.metadata = new Metadata(title, description, documentation, requiredHeaders, relativeLocation); 
+		this.codeBlock = codeBlock;
+	}
+	
+	Code(Metadata metadata,
+		 StringBuilder codeBlock) {
+		this.metadata = metadata;
 		this.codeBlock = codeBlock;
 	}
 	
