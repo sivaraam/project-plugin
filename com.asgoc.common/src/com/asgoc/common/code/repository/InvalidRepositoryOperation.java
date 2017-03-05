@@ -1,7 +1,7 @@
 package com.asgoc.common.code.repository;
 
 /**
- * Class thrown by <code> RepositoryAccessor </code> in cases of an exception.
+ * Class thrown by <code> RepositoryAccessorAdaptor </code> in cases of an exception.
  *
  * @author Kaartic Sivaraam
  */

@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Kaartic Sivaraam
  *
  */
-public interface JSONManipulator {
+public interface JSONManipulatorAdaptor {
 
 	/**
 	 * Provides the String representation of the JSON representation.
@@ -45,10 +45,10 @@ public interface JSONManipulator {
 	 * 				value to be associated with the specified key
 	 * 
 	 * @return
-	 * 			The handle of the JSONManipulator to allow nested 
+	 * 			The handle of the JSONManipulatorAdaptor to allow nested 
 	 * operations.
 	 */
-	public JSONManipulator appendPair(String key, Object bean);
+	public JSONManipulatorAdaptor appendPair(String key, Object bean);
 	
 	/**
      * Appends (key, array of JSON values) to the JSON representation.
@@ -63,10 +63,10 @@ public interface JSONManipulator {
      * JSON values
      * 
      * @return
-     * 			The handle of the JSONManipulator to allow nested 
+     * 			The handle of the JSONManipulatorAdaptor to allow nested 
 	 * operations.
      */
-	public JSONManipulator appendArray(String key, Collection<?> array);
+	public JSONManipulatorAdaptor appendArray(String key, Collection<?> array);
 	
 	/**
 	 * Appends (key, JSON representation) to the JSON representation. The 
@@ -82,8 +82,8 @@ public interface JSONManipulator {
 	 *  provided key. The Map would be converted to a JSON representation.
 	 * 
 	 * @return
-	 * 			The handle of the JSONManipulator to allow nested operations.
+	 * 			The handle of the JSONManipulatorAdaptor to allow nested operations.
 	 */
-	public JSONManipulator appendMap(String key, Map<? , ?> map);
+	public JSONManipulatorAdaptor appendMap(String key, Map<? , ?> map);
 
 }

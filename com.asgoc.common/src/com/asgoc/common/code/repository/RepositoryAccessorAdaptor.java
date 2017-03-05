@@ -10,7 +10,7 @@ import java.nio.file.Path;
  * @author Kaartic Sivaraam
  *
  */
-public interface RepositoryAccessor {
+public interface RepositoryAccessorAdaptor {
 	
 	/**
 	 * The contents of the file at specified location are 

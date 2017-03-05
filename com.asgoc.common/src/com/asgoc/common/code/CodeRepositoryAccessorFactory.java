@@ -4,7 +4,7 @@ import com.asgoc.common.code.repository.InvalidRepositoryOperation;
 
 /**
  * Factory method used to return objects of the classes that
- * implement the CodeRepositoryAccessor interface.
+ * implement the CodeRepositoryAccessorAdaptor interface.
  * 
  * @author Kaartic Sivaraam
  *
@@ -12,7 +12,7 @@ import com.asgoc.common.code.repository.InvalidRepositoryOperation;
 public final class CodeRepositoryAccessorFactory {
 	
 	/**
-	 * Provides an instance of the CodeRepositoryAccessor factory.
+	 * Provides an instance of the CodeRepositoryAccessorAdaptor factory.
 	 * 
 	 * @return
 	 * 		A <em> Singleton </em> instance of CodeRepositoryAccessorFactory
@@ -25,7 +25,7 @@ public final class CodeRepositoryAccessorFactory {
 	
 	/**
 	 * Provides an instance of the ConcreteCodeRepositoryAccessor
-	 * class which is one of the implementations of the CodeRepositoryAccessor
+	 * class which is one of the implementations of the CodeRepositoryAccessorAdaptor
 	 * interface.
 	 * 
 	 * @param basePath
@@ -37,7 +37,7 @@ public final class CodeRepositoryAccessorFactory {
 	 * @throws InvalidRepositoryOperation
 	 * 				Thrown in case of an invalid repository operation.
 	 */
-	public CodeRepositoryAccessor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
+	public CodeRepositoryAccessorAdaptor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
 		
 		return new ConcreteCodeRepositoryAccessor(basePath);
 		

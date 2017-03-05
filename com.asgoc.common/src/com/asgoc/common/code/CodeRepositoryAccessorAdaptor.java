@@ -12,7 +12,7 @@ import com.asgoc.common.code.repository.InvalidRepositoryOperation;
  * @author Kaartic Sivaraam
  *
  */
-public interface CodeRepositoryAccessor {
+public interface CodeRepositoryAccessorAdaptor {
 	
 	/**
 	 * The method must store the given code object to the 
