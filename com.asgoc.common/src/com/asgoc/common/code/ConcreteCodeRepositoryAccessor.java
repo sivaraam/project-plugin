@@ -154,9 +154,8 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 	 */
 	public void storeCode(Code code) throws InvalidRepositoryOperation {
 		
-		//TODO : Remove the extension before naming the metadata file
 		Path codeLocation = code.metadata.crucialMetadata.relativeLocation;
-		Path metadataLocation = Paths.get(codeLocation.toString()+"-metadata.json");
+		Path metadataLocation = Paths.get(codeLocation.toString().replaceFirst(FILE_EXTENSION_REGEX, "-metadata.json"));
 		Path parent = codeLocation.getParent();
 		Path indexLocation = Paths.get( (parent != null ? parent.toString() : "") + "index.json" );
 		
@@ -227,8 +226,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 	 */
  	public Code getCode(Path location) throws InvalidRepositoryOperation {
  		Path codeLocation = location;
- 		//TODO: correct after removal the extension from file name
-		Path metadataLocation = Paths.get(location.toString()+"-metadata.json");
+		Path metadataLocation = Paths.get(location.toString().replaceFirst(FILE_EXTENSION_REGEX,"-metadata.json"));
 		
 		StringBuilder codeBlock = repoAccessor.readFromFile(codeLocation);
 		StringBuilder metadataJSON = repoAccessor.readFromFile(metadataLocation);
@@ -275,5 +273,5 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 
 	private JSONManipulatorFactory jsonManipProvider; 
 	private RepositoryAccessorAdaptor repoAccessor;
-
+	private static final String FILE_EXTENSION_REGEX = "(\\.[a-zA-Z]+)$";
 }
