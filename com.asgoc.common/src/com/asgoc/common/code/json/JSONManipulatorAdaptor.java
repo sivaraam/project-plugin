@@ -135,16 +135,15 @@ public interface JSONManipulatorAdaptor {
 	public Iterator<String> getKeys();
 
 	/**
-	 * Provides a collection of the array of JSON values which have the 
-	 * same type.
+	 * Provides a collection of the array of String JSON values.
 	 * 
 	 * @param key
 	 * 			key which has as it's value an array of JSON objects
 	 * of the same type 
 	 * 
 	 * @return
-	 * 			Collection of JSON values
+	 * 			Collection of String JSON values
 	 */
-	public Collection<?> getArray(String key);
+	public Collection<String> getStringArray(String key);
 
 }

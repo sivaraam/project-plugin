@@ -205,10 +205,9 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 		
 		String crucialMetadataJSON = metadataJSONManip.getString("crucialMetadata");
 		StringBuilder documentation = new StringBuilder(metadataJSONManip.getString("documentation"));
-		Collection<?> array = metadataJSONManip.getArray("headers");
-		Collection<String> headers = new ArrayList(array);
+		Collection<String> headers = metadataJSONManip.getStringArray("headers");
 		
-		return new Code.Metadata(getCrucialMetadata(crucialMetadataJSON),documentation, headers);
+		return new Code.Metadata(getCrucialMetadata(crucialMetadataJSON), documentation, headers);
 	}
  
 	/**

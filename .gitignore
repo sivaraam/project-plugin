@@ -3,3 +3,4 @@ artifacts/
 *.class
 */bin/
 .metadata/
+Eclipse*.pdf

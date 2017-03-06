@@ -189,17 +189,16 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	}
 	
 	/**
-	 * Provides a collection of the array of JSON values which are of 
-	 * String type.
+	 * Provides a collection of the array of String JSON values.
 	 * 
 	 * @param key
 	 * 			key which has as it's value an array of JSON objects
 	 * of the same type 
 	 * 
 	 * @return
-	 * 			Collection of JSON values
+	 * 			Collection of String JSON values
 	 */
-	public Collection<String> getArray(String key) {
+	public Collection<String> getStringArray(String key) {
 		JSONArray array = json.getJSONArray(key);
 		Collection<String> jsonValues = new ArrayList<>();
 		
