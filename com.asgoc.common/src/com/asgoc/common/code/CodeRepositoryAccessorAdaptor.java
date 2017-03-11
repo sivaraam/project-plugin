@@ -1,9 +1,7 @@
 package com.asgoc.common.code;
 
 import java.nio.file.Path;
-import java.util.List;
-
-import com.asgoc.common.code.repository.InvalidRepositoryOperation;
+import java.util.Collection;
 
 /**
  * The interface that specifies the contract for a 
@@ -26,7 +24,7 @@ public interface CodeRepositoryAccessorAdaptor {
 	 * 			Exception thrown  in case of an Invalid repository 
 	 * operation.
 	 */
-	public void storeCode(Code code) throws InvalidRepositoryOperation;
+	public void storeCode(Code code) throws InvalidCodeRepositoryOperation;
 	
 	/**
 	 * Provide the Code object that represents the Code block and it's metadata
@@ -41,7 +39,7 @@ public interface CodeRepositoryAccessorAdaptor {
 	 * 			Exception thrown  in case of an Invalid repository 
 	 * operation.
 	 */
-	public Code getCode(Path location) throws InvalidRepositoryOperation;
+	public Code getCode(Path location) throws InvalidCodeRepositoryOperation;
 	
 	/**
 	 * Provides the list of Crucial Metadata of the code found in the given path.
@@ -58,6 +56,6 @@ public interface CodeRepositoryAccessorAdaptor {
 	 * 			Exception thrown  in case of an Invalid repository 
 	 * operation.
 	 */
-	public List<Code.Metadata.CrucialMetadata> getCrucialMetadata(Path location) throws InvalidRepositoryOperation;
+	public Collection<Code.Metadata.CrucialMetadata> getCrucialMetadata(Path location) throws InvalidCodeRepositoryOperation;
 	
 }
