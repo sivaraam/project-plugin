@@ -29,7 +29,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
  * 
  * @author Kaartic Sivaraam
  */
-class BufferedRepositoryAccessor implements RepositoryAccessorAdaptor{
+class BufferedRepositoryAccessor implements RepositoryAccessor{
 
     /**
      * 

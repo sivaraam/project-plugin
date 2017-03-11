@@ -18,7 +18,7 @@ import org.json.JSONObject;
  * 
  * @author Kaartic Sivaraam
  */
-class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
+class ConcreteJSONManipulator implements JSONManipulator {
 /**
 	 * Creates an instance of the JSONManipulatorAdaptor by creating a 
 	 * JSONObject with it's default constructor.

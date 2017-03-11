@@ -36,7 +36,7 @@ public final class CodeRepositoryAccessorFactory {
 	 * 				Thrown in case of an invalid repository operation.
 	 * 
 	 */
-	public CodeRepositoryAccessorAdaptor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidCodeRepositoryOperation {
+	public CodeRepositoryAccessor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidCodeRepositoryOperation {
 		
 		return new ConcreteCodeRepositoryAccessor(basePath);
 		

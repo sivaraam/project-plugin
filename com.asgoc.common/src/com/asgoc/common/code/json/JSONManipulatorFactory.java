@@ -29,7 +29,7 @@ public class JSONManipulatorFactory {
 	 * @return
 	 * 		An instance of the ConcreteJSONManipulator class
 	 */
-	public JSONManipulatorAdaptor getConcreteJSONManipulator() {
+	public JSONManipulator getConcreteJSONManipulator() {
 		
 		return new ConcreteJSONManipulator();
 		
@@ -46,7 +46,7 @@ public class JSONManipulatorFactory {
 	 * @return
 	 * 		An instance of the ConcreteJSONManipulator class
 	 */
-	public JSONManipulatorAdaptor getConcreteJSONManipulator(String initialiserString) {
+	public JSONManipulator getConcreteJSONManipulator(String initialiserString) {
 		
 		return new ConcreteJSONManipulator(initialiserString);
 		
@@ -63,7 +63,7 @@ public class JSONManipulatorFactory {
 	 * @return
 	 * 		An instance of the ConcreteJSONManipulator class
 	 */
-	public JSONManipulatorAdaptor getConcreteJSONManipulator(Object initialiser) {
+	public JSONManipulator getConcreteJSONManipulator(Object initialiser) {
 		
 		return new ConcreteJSONManipulator(initialiser);
 		

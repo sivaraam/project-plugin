@@ -10,7 +10,7 @@ import java.util.Collection;
  * @author Kaartic Sivaraam
  *
  */
-public interface CodeRepositoryAccessorAdaptor {
+public interface CodeRepositoryAccessor {
 	
 	/**
 	 * The method must store the given code object to the 

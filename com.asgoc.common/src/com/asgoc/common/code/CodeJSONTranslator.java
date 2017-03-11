@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.asgoc.common.code.json.JSONManipulatorAdaptor;
+import com.asgoc.common.code.json.JSONManipulator;
 import com.asgoc.common.code.json.JSONManipulatorFactory;
 
 abstract class CodeJSONTranslator {
@@ -40,7 +40,7 @@ abstract class CodeJSONTranslator {
 	 */
 	static String getMetadataJSON(Code.Metadata metadata) {
 		
-		JSONManipulatorAdaptor metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadata);
+		JSONManipulator metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadata);
 		return metadataJSONManip.toString(PRETTY_PRINT_FACTOR);
 				
 	}
@@ -85,7 +85,7 @@ abstract class CodeJSONTranslator {
 		hmap.put(DESCRIPTION_IDENTIFIER, crucialMetadata.description.toString());
 		
 		
-		JSONManipulatorAdaptor indexJSONManip = (IndexJSON != null) ? jsonManipProvider.getConcreteJSONManipulator(IndexJSON)
+		JSONManipulator indexJSONManip = (IndexJSON != null) ? jsonManipProvider.getConcreteJSONManipulator(IndexJSON)
 																	: jsonManipProvider.getConcreteJSONManipulator();
 		indexJSONManip.appendMap(crucialMetadata.relativeLocation.toString(), hmap);
 		
@@ -123,7 +123,7 @@ abstract class CodeJSONTranslator {
 	 * 			Code.Metadata.CrucialMetdata instance created from the JSON string
 	 */
 	static Code.Metadata.CrucialMetadata getCrucialMetadata(String crucialMetadataJSON) {
-		JSONManipulatorAdaptor crucialMDJSONManip = jsonManipProvider.getConcreteJSONManipulator(crucialMetadataJSON);
+		JSONManipulator crucialMDJSONManip = jsonManipProvider.getConcreteJSONManipulator(crucialMetadataJSON);
 		
 		String title = crucialMDJSONManip.getString(TITLE_IDENTIFIER);
 		StringBuilder description = new StringBuilder(crucialMDJSONManip.getString(DESCRIPTION_IDENTIFIER));
@@ -145,7 +145,7 @@ abstract class CodeJSONTranslator {
 	 * 	
 	 */
 	static Code.Metadata getMetadata(String metadataJSON) {
-		JSONManipulatorAdaptor metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadataJSON);
+		JSONManipulator metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadataJSON);
 		
 		String crucialMetadataJSON = metadataJSONManip.getString(CRUCIAL_METADATA_IDENTIFIER);
 		StringBuilder documentation = new StringBuilder(metadataJSONManip.getString(DOCUMENTATION_IDENTIFIER));
@@ -168,13 +168,13 @@ abstract class CodeJSONTranslator {
 	 */
 	static Collection<Code.Metadata.CrucialMetadata> getIndex(String indexJSON) {
 		
-		JSONManipulatorAdaptor indexJSONManip = jsonManipProvider.getConcreteJSONManipulator(indexJSON);
+		JSONManipulator indexJSONManip = jsonManipProvider.getConcreteJSONManipulator(indexJSON);
 		Collection<Code.Metadata.CrucialMetadata> index = new ArrayList<>();
 		
 		for(Iterator<String> keys = indexJSONManip.getKeys(); keys.hasNext(); ) {
 			String title = keys.next();
 			
-			JSONManipulatorAdaptor value = jsonManipProvider.getConcreteJSONManipulator(indexJSONManip.get(title));
+			JSONManipulator value = jsonManipProvider.getConcreteJSONManipulator(indexJSONManip.get(title));
 			StringBuilder description = new StringBuilder(value.get(DESCRIPTION_IDENTIFIER).toString());
 			Path locationOfCode = Paths.get(value.get(LOCATION_IDENTIFIER).toString());
 			

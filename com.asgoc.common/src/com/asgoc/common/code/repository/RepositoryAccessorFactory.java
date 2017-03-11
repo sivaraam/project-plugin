@@ -37,7 +37,7 @@ public final class RepositoryAccessorFactory {
 	 * @throws InvalidRepositoryOperation
 	 * 				Thrown in case of an invalid repository operation.
 	 */
-	public RepositoryAccessorAdaptor getBufferedCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
+	public RepositoryAccessor getBufferedCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
 		
 		return new BufferedRepositoryAccessor(basePath);
 	}

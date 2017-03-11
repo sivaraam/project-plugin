@@ -6,7 +6,7 @@ import java.util.Collection;
 
 import com.asgoc.common.code.repository.InvalidRepositoryOperation;
 import com.asgoc.common.code.repository.RepositoryAccessorFactory;
-import com.asgoc.common.code.repository.RepositoryAccessorAdaptor;
+import com.asgoc.common.code.repository.RepositoryAccessor;
 
 /**
  * The class used to access and manipulate the Code repository.
@@ -15,7 +15,7 @@ import com.asgoc.common.code.repository.RepositoryAccessorAdaptor;
  * @author Kaartic Sivaraam
  *
  */
-final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdaptor{
+final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	
 	/** 
 	 * @param basePath
@@ -203,7 +203,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 		return CodeJSONTranslator.getIndex(indexJSON.toString()); 
 	}
 
-	private RepositoryAccessorAdaptor repoAccessor;
+	private RepositoryAccessor repoAccessor;
 
 	private static final String FILE_EXTENSION_REGEX = "(\\.[a-zA-Z]+)$";
 	private static final String INDEX_FILE_NAME = "index.json";

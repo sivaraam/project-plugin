@@ -12,10 +12,10 @@ import java.util.Map;
  * @author Kaartic Sivaraam
  *
  */
-public interface JSONManipulatorAdaptor {
+public interface JSONManipulator {
 
 	//================= Manipulating Methods - Start =========================
-	public JSONManipulatorAdaptor appendPair(String key, Object bean);
+	public JSONManipulator appendPair(String key, Object bean);
 	
 	/**
      * Appends (key, array of JSON values) to the JSON representation.
@@ -33,7 +33,7 @@ public interface JSONManipulatorAdaptor {
      * 			The handle of the JSONManipulatorAdaptor to allow nested 
 	 * operations.
      */
-	public JSONManipulatorAdaptor appendArray(String key, Collection<?> arrayCollection);
+	public JSONManipulator appendArray(String key, Collection<?> arrayCollection);
 	
 	/**
 	 * Appends (key, JSON representation) to the JSON representation. The 
@@ -51,7 +51,7 @@ public interface JSONManipulatorAdaptor {
 	 * @return
 	 * 			The handle of the JSONManipulatorAdaptor to allow nested operations.
 	 */
-	public JSONManipulatorAdaptor appendMap(String key, Map<? , ?> keyValues);
+	public JSONManipulator appendMap(String key, Map<? , ?> keyValues);
 	//===================== Manipulating methods - End =========================
 	
 	
