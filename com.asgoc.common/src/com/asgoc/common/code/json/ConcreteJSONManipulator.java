@@ -63,6 +63,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * 			The handle of the ConcreteJSONManipulator to allow nested 
 	 * operations.
 	 */
+	@Override
 	public ConcreteJSONManipulator appendPair(String key, Object value) {
 		json.put(key, value);
 		return this;		
@@ -83,6 +84,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
      * 			The handle of the ConcreteJSONManipulator to allow nested 
 	 * operations.
      */
+    @Override
     public ConcreteJSONManipulator appendArray(String key, Collection<?> arrayCollection) {
       	json.put(key, arrayCollection);
        	return this;
@@ -105,6 +107,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * 			The handle of the ConcreteJSONManipulator to allow nested 
 	 * operations.
 	 */
+    @Override
     public ConcreteJSONManipulator appendMap(String key, Map<? ,?> keyValues) {
         json.put(key, keyValues);
         return this;        
@@ -147,6 +150,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * @return
 	 * 			the number of keys in the JSONObject field
 	 */
+	@Override
 	public int length() {
 		return json.length();
 	}
@@ -160,6 +164,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * @return
 	 * 			value corresponding to the given key
 	 */
+	@Override
 	public Object get(String key) {
 		return json.get(key);
 	}
@@ -174,6 +179,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * @return
 	 * 			String associated with the given key
 	 */
+	@Override
 	public String getString(String key) {
 		return json.getString(key);
 	}
@@ -184,6 +190,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * @return
 	 * 		Iterator that enumerates the keys present in the JSONObject field
 	 */
+	@Override
 	public Iterator<String> getKeys() {
 		return json.keys();
 	}
@@ -198,6 +205,7 @@ class ConcreteJSONManipulator implements JSONManipulatorAdaptor {
 	 * @return
 	 * 			Collection of String JSON values
 	 */
+	@Override
 	public Collection<String> getStringArray(String key) {
 		JSONArray array = json.getJSONArray(key);
 		Collection<String> jsonValues = new ArrayList<>();

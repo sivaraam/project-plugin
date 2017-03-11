@@ -122,6 +122,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 	 * 				Thrown when the invalid repository operations are performed. 
 	 * For more information refer documentation of RepositoryAccessorAdaptor class. 
 	 */
+	@Override
 	public void storeCode(Code code) throws InvalidCodeRepositoryOperation {
 		
 		Path codeLocation = code.metadata.crucialMetadata.relativeLocation;
@@ -153,6 +154,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 	 * 			Thrown when the invalid repository operations are performed. 
 	 * For more information refer documentation of RepositoryAccessorAdaptor class.
 	 */
+	@Override
  	public Code getCode(Path location) throws InvalidCodeRepositoryOperation {
  		Path codeLocation = location;
 		Path metadataLocation = Paths.get(location.toString().replaceFirst(FILE_EXTENSION_REGEX, METADATA_FILE_SUFFIX));
@@ -188,6 +190,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessorAdap
 	 * For more information refer documentation of RepositoryAccessorAdaptor class. 
 	 * 
 	 */
+	@Override
 	public Collection<Code.Metadata.CrucialMetadata> getCrucialMetadata(Path location) throws InvalidCodeRepositoryOperation {
 		Path indexLocation = Paths.get( (location.toString() != "" ? location.toString() : ""), INDEX_FILE_NAME);
 		StringBuilder indexJSON;

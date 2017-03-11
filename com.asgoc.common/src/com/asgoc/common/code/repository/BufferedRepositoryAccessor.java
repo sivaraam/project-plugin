@@ -66,6 +66,7 @@ class BufferedRepositoryAccessor implements RepositoryAccessorAdaptor{
      *         <li> an <code> IOException </code> occurs during a file operation
      * </ul>
      */
+    @Override
     public StringBuilder readFromFile(Path relativeSource) throws InvalidRepositoryOperation {
         Path sourcePath = basePath.resolve(relativeSource);
         if(Files.notExists(sourcePath))
@@ -107,6 +108,7 @@ class BufferedRepositoryAccessor implements RepositoryAccessorAdaptor{
      *     <li> an <code> IOException </code> occurs during File write operation
      * </ul>
      */
+    @Override
     public void writeToNewFile(Path relativeDestination, String contentsToWrite) throws InvalidRepositoryOperation {
         
     	Path destinationPath = basePath.resolve(relativeDestination);
@@ -142,6 +144,7 @@ class BufferedRepositoryAccessor implements RepositoryAccessorAdaptor{
      *         <li> an <code> IOException </code> occurs during File write operation
      * </ul>
      */
+     @Override
      public void appendToFile(Path relativeDestination, String contentsToAppend) throws InvalidRepositoryOperation {
         Path destinationPath = basePath.resolve(relativeDestination);
         
