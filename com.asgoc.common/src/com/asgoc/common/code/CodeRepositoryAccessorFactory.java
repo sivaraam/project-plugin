@@ -1,7 +1,5 @@
 package com.asgoc.common.code;
 
-import com.asgoc.common.code.repository.InvalidRepositoryOperation;
-
 /**
  * Factory method used to return objects of the classes that
  * implement the CodeRepositoryAccessorAdaptor interface.
@@ -34,10 +32,11 @@ public final class CodeRepositoryAccessorFactory {
 	 * @return
 	 * 			An instance of the ConcreteCodeRepositoryAccessor class.
 	 * 
-	 * @throws InvalidRepositoryOperation
+	 * @throws InvalidCodeRepositoryOperation
 	 * 				Thrown in case of an invalid repository operation.
+	 * 
 	 */
-	public CodeRepositoryAccessorAdaptor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
+	public CodeRepositoryAccessorAdaptor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidCodeRepositoryOperation {
 		
 		return new ConcreteCodeRepositoryAccessor(basePath);
 		
