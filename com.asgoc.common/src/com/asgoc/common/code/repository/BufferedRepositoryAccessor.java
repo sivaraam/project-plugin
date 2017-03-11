@@ -16,7 +16,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
 
 /**
  * This class serves as a wrapper for the file operations provided by Java.
- * It is an implementation of the RepositoryAccessorAdaptor interface.
+ * It is an implementation of the RepositoryAccessor interface.
  * 
  * This is done to abstract away the work done to access files. This class is 
  * used to access a repository. It allows the user to read and write contents 

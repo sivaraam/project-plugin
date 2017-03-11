@@ -1,5 +1,11 @@
 package com.asgoc.common.code;
 
+/**
+ * Class thrown by the ConcreteCodeRepostioryAccessor
+ * 
+ * @author Kaartic Sivaraam
+ *
+ */
 public class InvalidCodeRepositoryOperation extends Exception {
 	
 	private static final long serialVersionUID = 1L;

@@ -13,14 +13,14 @@ import org.json.JSONObject;
  * The class is an implementation of the JSONManipulaotr interface. 
  * It provides an interface only to a small portion of the library that is required.
  * 
- * Most of the methods return the instance of the JSONManipulatorAdaptor used to invoke them
+ * Most of the methods return the instance of the JSONManipulator used to invoke them
  * to allow nesting of calls.
  * 
  * @author Kaartic Sivaraam
  */
 class ConcreteJSONManipulator implements JSONManipulator {
 /**
-	 * Creates an instance of the JSONManipulatorAdaptor by creating a 
+	 * Creates an instance of the JSONManipulator by creating a 
 	 * JSONObject with it's default constructor.
 	 */
 	public ConcreteJSONManipulator() {

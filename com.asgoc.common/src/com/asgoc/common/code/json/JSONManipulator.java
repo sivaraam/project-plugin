@@ -30,7 +30,7 @@ public interface JSONManipulator {
      * JSON values
      * 
      * @return
-     * 			The handle of the JSONManipulatorAdaptor to allow nested 
+     * 			The handle of the JSONManipulator to allow nested 
 	 * operations.
      */
 	public JSONManipulator appendArray(String key, Collection<?> arrayCollection);
@@ -49,7 +49,7 @@ public interface JSONManipulator {
 	 *  provided key. The Map would be converted to a JSON representation.
 	 * 
 	 * @return
-	 * 			The handle of the JSONManipulatorAdaptor to allow nested operations.
+	 * 			The handle of the JSONManipulator to allow nested operations.
 	 */
 	public JSONManipulator appendMap(String key, Map<? , ?> keyValues);
 	//===================== Manipulating methods - End =========================
@@ -90,7 +90,7 @@ public interface JSONManipulator {
 	 * 				value to be associated with the specified key
 	 * 
 	 * @return
-	 * 			The handle of the JSONManipulatorAdaptor to allow nested 
+	 * 			The handle of the JSONManipulator to allow nested 
 	 * operations.
 	 */
 	

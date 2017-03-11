@@ -10,7 +10,7 @@ import com.asgoc.common.code.repository.RepositoryAccessor;
 
 /**
  * The class used to access and manipulate the Code repository.
- * It is an implementation of the CodeRepositoryAccessorAdaptor interface. 
+ * It is an implementation of the CodeRepositoryAccessor interface. 
  * 
  * @author Kaartic Sivaraam
  *
@@ -47,7 +47,9 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * 
 	 * @throws InvalidRepositoryOperation
 	 * 			Thrown when the invalid repository operations are performed. 
-	 * For more information, refer documentation of RepositoryAccessorAdaptor class. 
+	 * For more information, refer the documentation of implementation of the
+	 * RepositoryAccessor interface. 
+	 * 
 	 */
 	private void storeMetadata(Path metadataLocation, Code.Metadata metadata) throws InvalidCodeRepositoryOperation {
 		
@@ -74,8 +76,9 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * 			The CurcialMetadata instance used to update the index file.
 	 * 
 	 * @throws InvalidRepositoryOperation
-	 * 			Thrown when the invalid repository operations are performed. 
-	 * For more information, refer documentation of RepositoryAccessorAdaptor class. 
+	 * 			Thrown when invalid repository operations are performed. 
+	 * For more information, refer the documentation of implementation of the
+	 * RepositoryAccessor interface. 
 	 */
 	private void updateIndex(Path indexLocation, Code.Metadata.CrucialMetadata crucialMd) throws InvalidCodeRepositoryOperation {
 		
@@ -120,7 +123,8 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * 
 	 * @throws InvalidRepositoryOperation
 	 * 				Thrown when the invalid repository operations are performed. 
-	 * For more information refer documentation of RepositoryAccessorAdaptor class. 
+	 * For more information, refer the documentation of implementation of the
+	 * RepositoryAccessor interface. 
 	 */
 	@Override
 	public void storeCode(Code code) throws InvalidCodeRepositoryOperation {
@@ -152,7 +156,9 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * 
 	 * @throws InvalidRepositoryOperation
 	 * 			Thrown when the invalid repository operations are performed. 
-	 * For more information refer documentation of RepositoryAccessorAdaptor class.
+	 * For more information, refer the documentation of implementation of the
+	 * RepositoryAccessor interface. 
+	 * 
 	 */
 	@Override
  	public Code getCode(Path location) throws InvalidCodeRepositoryOperation {
@@ -187,7 +193,8 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * 
 	 * @throws InvalidRepositoryOperation
 	 * 			Thrown when the invalid repository operations are performed. 
-	 * For more information refer documentation of RepositoryAccessorAdaptor class. 
+	 * For more information refer the documentation of the implementation of
+	 * the RepositoryAccessor interface.
 	 * 
 	 */
 	@Override

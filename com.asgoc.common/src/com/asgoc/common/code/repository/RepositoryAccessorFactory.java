@@ -4,7 +4,7 @@ import com.asgoc.common.code.repository.InvalidRepositoryOperation;
 
 /**
  * Factory method used to return objects of the classes that
- * implement the RepositoryAccessorAdaptor interface.
+ * implement the RepositoryAccessor interface.
  * 
  * @author Kaartic Sivaraam
  *
@@ -12,7 +12,7 @@ import com.asgoc.common.code.repository.InvalidRepositoryOperation;
 public final class RepositoryAccessorFactory {
 	
 	/**
-	 * Provides an instance of the RepositoryAccessorAdaptor factory.
+	 * Provides an instance of the RepositoryAccessor factory.
 	 * 
 	 * @return
 	 * 		A <em> Singleton </em> instance of RepositoryAccessorFactory
@@ -25,7 +25,7 @@ public final class RepositoryAccessorFactory {
 	
 	/**
 	 * Provides an instance of the BufferedRepositoryAccessor
-	 * class which is one of the implementations of the RepositoryAccessorAdaptor
+	 * class which is one of the implementations of the RepositoryAccessor
 	 * interface.
 	 * 
 	 * @param basePath

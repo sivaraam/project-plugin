@@ -2,7 +2,7 @@ package com.asgoc.common.code.json;
 
 /**
  * Factory method used to return objects of the classes that
- * implement the JSONManipulatorAdaptor interface.
+ * implement the JSONManipulator interface.
  * 
  * @author Kaartic Sivaraam
  *
@@ -24,7 +24,7 @@ public class JSONManipulatorFactory {
 	
 	/**
 	 * Provides an instance of the ConcreteJSONManipulator class, 
-	 * one of the implementations of the JSONManipulatorAdaptor interface.
+	 * one of the implementations of the JSONManipulator interface.
 	 * 
 	 * @return
 	 * 		An instance of the ConcreteJSONManipulator class
@@ -37,7 +37,7 @@ public class JSONManipulatorFactory {
 	
 	/**
 	 * Provides an instance of the ConcreteJSONManipulator class, 
-	 * one of the implementations of the JSONManipulatorAdaptor interface,
+	 * one of the implementations of the JSONManipulator interface,
 	 * that gets a String parameter. 
 	 * 
 	 * @param initialiserString
@@ -54,7 +54,7 @@ public class JSONManipulatorFactory {
 	
 	/**
 	 * Provides an instance of the ConcreteJSONManipulator class, 
-	 * one of the implementations of the JSONManipulatorAdaptor interface,
+	 * one of the implementations of the JSONManipulator interface,
 	 * that gets an Object a parameter. 
 	 * 
 	 * @param initialiser 

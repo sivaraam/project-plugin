@@ -2,7 +2,7 @@ package com.asgoc.common.code;
 
 /**
  * Factory method used to return objects of the classes that
- * implement the CodeRepositoryAccessorAdaptor interface.
+ * implement the CodeRepositoryAccessor interface.
  * 
  * @author Kaartic Sivaraam
  *
@@ -10,7 +10,7 @@ package com.asgoc.common.code;
 public final class CodeRepositoryAccessorFactory {
 
 	/**
-	 * Provides an instance of the CodeRepositoryAccessorAdaptor factory.
+	 * Provides an instance of the CodeRepositoryAccessor factory.
 	 * 
 	 * @return
 	 * 		A <em> Singleton </em> instance of CodeRepositoryAccessorFactory
@@ -23,7 +23,7 @@ public final class CodeRepositoryAccessorFactory {
 	
 	/**
 	 * Provides an instance of the ConcreteCodeRepositoryAccessor
-	 * class which is one of the implementations of the CodeRepositoryAccessorAdaptor
+	 * class which is one of the implementations of the CodeRepositoryAccessor
 	 * interface.
 	 * 
 	 * @param basePath
