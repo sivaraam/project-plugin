@@ -185,7 +185,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * 
 	 * @param location 
 	 * 				Location for which the crucial metadata list is to be generated. If the 
-	 * codes are in the base path of the repository, then pass an empty string for the location.
+	 * codes are in the base path of the repository, then an empty string is expected for the location.
 	 * 
 	 * @return
 	 * 			List of Code.Metdata.CrucialMetdata objects that represent the crucial 
@@ -199,7 +199,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 */
 	@Override
 	public Collection<Code.Metadata.CrucialMetadata> getCrucialMetadata(Path location) throws InvalidCodeRepositoryOperation {
-		Path indexLocation = Paths.get( (location.toString() != "" ? location.toString() : ""), INDEX_FILE_NAME);
+		Path indexLocation = Paths.get(location.toString(), INDEX_FILE_NAME);
 		StringBuilder indexJSON;
 		try {
 			indexJSON = repoAccessor.readFromFile(indexLocation);
