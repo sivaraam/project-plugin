@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.asgoc.common.code.json.JSONManipulator;
-import com.asgoc.common.code.json.JSONManipulatorFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 abstract class CodeJSONTranslator {
 	
@@ -40,8 +40,7 @@ abstract class CodeJSONTranslator {
 	 */
 	static String getMetadataJSON(Code.Metadata metadata) {
 		
-		JSONManipulator metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadata);
-		return metadataJSONManip.toString(PRETTY_PRINT_FACTOR);
+		return new JSONObject(metadata).toString(PRETTY_PRINT_FACTOR);
 				
 	}
 	
@@ -84,12 +83,10 @@ abstract class CodeJSONTranslator {
 		hmap.put(TITLE_IDENTIFIER, crucialMetadata.title);
 		hmap.put(DESCRIPTION_IDENTIFIER, crucialMetadata.description.toString());
 		
+		JSONObject indexJSONObj = (IndexJSON != null) ? new JSONObject(IndexJSON) : new JSONObject();
+		indexJSONObj.append(crucialMetadata.relativeLocation.toString(), hmap);
 		
-		JSONManipulator indexJSONManip = (IndexJSON != null) ? jsonManipProvider.getConcreteJSONManipulator(IndexJSON)
-																	: jsonManipProvider.getConcreteJSONManipulator();
-		indexJSONManip.appendMap(crucialMetadata.relativeLocation.toString(), hmap);
-		
-		return indexJSONManip.toString(PRETTY_PRINT_FACTOR);
+		return indexJSONObj.toString(PRETTY_PRINT_FACTOR);
 		
 	}
 	
@@ -112,6 +109,31 @@ abstract class CodeJSONTranslator {
 	}
 	
 	/**
+	 * Provides a collection of the array of String JSON values.
+	 * 
+	 * @param json
+	 * 			JSONObject which contains the key which should have
+	 * an array of Sting values
+	 * 
+	 * @param key
+	 * 			key which has as it's value an array of JSON objects
+	 * of the same type
+	 * 
+	 * @return
+	 * 			Collection of String JSON values
+	 */
+	private static Collection<String> getStringArray(JSONObject json, String key) {
+		JSONArray array = json.getJSONArray(key);
+		Collection<String> jsonValues = new ArrayList<>();
+		
+		for(Iterator<Object> arrayIter = array.iterator(); arrayIter.hasNext(); ) {
+			jsonValues.add(arrayIter.next().toString());
+		}
+
+		return jsonValues;
+	}
+	
+	/**
 	 * Provides a Code.Metadata.CrucialMetdata instance constructed from the JSON
 	 * string that was previously formed from it.
 	 * 
@@ -123,11 +145,11 @@ abstract class CodeJSONTranslator {
 	 * 			Code.Metadata.CrucialMetdata instance created from the JSON string
 	 */
 	static Code.Metadata.CrucialMetadata getCrucialMetadata(String crucialMetadataJSON) {
-		JSONManipulator crucialMDJSONManip = jsonManipProvider.getConcreteJSONManipulator(crucialMetadataJSON);
+		JSONObject crucialMDJSONObj = new JSONObject(crucialMetadataJSON);
 		
-		String title = crucialMDJSONManip.getString(TITLE_IDENTIFIER);
-		StringBuilder description = new StringBuilder(crucialMDJSONManip.getString(DESCRIPTION_IDENTIFIER));
-		Path location = Paths.get(crucialMDJSONManip.getString(LOCATION_IDENTIFIER));
+		String title = crucialMDJSONObj.getString(TITLE_IDENTIFIER);
+		StringBuilder description = new StringBuilder(crucialMDJSONObj.getString(DESCRIPTION_IDENTIFIER));
+		Path location = Paths.get(crucialMDJSONObj.getString(LOCATION_IDENTIFIER));
 		
 		return new Code.Metadata.CrucialMetadata(title, description, location);
 	}
@@ -145,19 +167,21 @@ abstract class CodeJSONTranslator {
 	 * 	
 	 */
 	static Code.Metadata getMetadata(String metadataJSON) {
-		JSONManipulator metadataJSONManip = jsonManipProvider.getConcreteJSONManipulator(metadataJSON);
+		JSONObject metadataJSONObj = new JSONObject(metadataJSON);
 		
-		String crucialMetadataJSON = metadataJSONManip.getString(CRUCIAL_METADATA_IDENTIFIER);
-		StringBuilder documentation = new StringBuilder(metadataJSONManip.getString(DOCUMENTATION_IDENTIFIER));
-		Collection<String> headers = metadataJSONManip.getStringArray(HEADER_IDENTIFIER);
+		String crucialMetadataJSON = metadataJSONObj.getJSONObject(CRUCIAL_METADATA_IDENTIFIER).toString();
+		StringBuilder documentation = new StringBuilder(metadataJSONObj.getString(DOCUMENTATION_IDENTIFIER));
+		Collection<String> headers = getStringArray(metadataJSONObj, HEADER_IDENTIFIER);
 		
 		return new Code.Metadata(getCrucialMetadata(crucialMetadataJSON), documentation, headers);
 	}
 	
+	
+	
 	/**
 	 * Provides a list of Code.Metadata.CrucialMetdata instances formed from the 
 	 * provided JSON string, which was previously generated to store the  index.
-	 *  
+	 * 
 	 * @param indexJSON
 	 * 			String representation of the JSON that is used create the list of 
 	 * Code.Metadata.CrucialMetdata instances
@@ -168,18 +192,18 @@ abstract class CodeJSONTranslator {
 	 */
 	static Collection<Code.Metadata.CrucialMetadata> getIndex(String indexJSON) {
 		
-		JSONManipulator indexJSONManip = jsonManipProvider.getConcreteJSONManipulator(indexJSON);
 		Collection<Code.Metadata.CrucialMetadata> index = new ArrayList<>();
+		JSONObject indexJSONObj = new JSONObject(indexJSON);
 		
-		for(Iterator<String> keys = indexJSONManip.getKeys(); keys.hasNext(); ) {
-			String title = keys.next();
+		for(Iterator<String> keys = indexJSONObj.keys(); keys.hasNext(); ) {
+			String location = keys.next();
 			
-			JSONManipulator value = jsonManipProvider.getConcreteJSONManipulator(indexJSONManip.get(title));
-			StringBuilder description = new StringBuilder(value.get(DESCRIPTION_IDENTIFIER).toString());
-			Path locationOfCode = Paths.get(value.get(LOCATION_IDENTIFIER).toString());
+			JSONObject currFileJSON = new JSONObject(indexJSONObj.getJSONObject(location).toString());
+			StringBuilder description = new StringBuilder(currFileJSON.getString(DESCRIPTION_IDENTIFIER));
+			String title = currFileJSON.getString(TITLE_IDENTIFIER);
 			
-			index.add(new Code.Metadata.CrucialMetadata(title, description, locationOfCode));
-		}
+			index.add( new Code.Metadata.CrucialMetadata(title, description, Paths.get(location)) );
+	}
 		
 		return index;
 	}
@@ -187,11 +211,9 @@ abstract class CodeJSONTranslator {
 	private static final String TITLE_IDENTIFIER = "title";
 	private static final String HEADER_IDENTIFIER = "headers";
 	private static final String DOCUMENTATION_IDENTIFIER = "documentation";
-	private static final String CRUCIAL_METADATA_IDENTIFIER = "crucialMetadataIdentifier";
+	private static final String CRUCIAL_METADATA_IDENTIFIER = "crucialMetadata";
 	private static final String LOCATION_IDENTIFIER = "location";
 	private static final String DESCRIPTION_IDENTIFIER = "description";
 	
 	private static final int PRETTY_PRINT_FACTOR = 3;
-	
-	private static JSONManipulatorFactory jsonManipProvider;
 }

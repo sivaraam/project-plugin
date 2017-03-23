@@ -24,7 +24,7 @@ final class ConcreteCodeRepositoryAccessor implements CodeRepositoryAccessor{
 	 * @throws InvalidRepositoryOperation
 	 * 					Thrown when the base path does not exist
 	 */
-	public ConcreteCodeRepositoryAccessor(String basePath) throws InvalidCodeRepositoryOperation { 
+	public ConcreteCodeRepositoryAccessor(Path basePath) throws InvalidCodeRepositoryOperation { 
 		RepositoryAccessorFactory raf = RepositoryAccessorFactory.getInstance();
 		try {
 			repoAccessor = raf.getBufferedCodeRepositoryAccessor(basePath);

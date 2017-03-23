@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.WRITE;
@@ -40,12 +39,12 @@ class BufferedRepositoryAccessor implements RepositoryAccessor{
      * @throws InvalidRepositoryOperation 
      * 				The constructor throws when the given base path does not exist.
      */
-	public BufferedRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
-		if(Files.notExists(Paths.get(basePath))) {
+	public BufferedRepositoryAccessor(Path basePath) throws InvalidRepositoryOperation {
+		if(Files.notExists(basePath)) {
 			this.basePath = null;
         	throw new InvalidRepositoryOperation ("The base path does not exist");
 		}
-        this.basePath = Paths.get(basePath);
+        this.basePath = basePath;
 	}
 	
     /**

@@ -1,5 +1,7 @@
 package com.asgoc.common.code;
 
+import java.nio.file.Path;
+
 /**
  * Factory method used to return objects of the classes that
  * implement the CodeRepositoryAccessor interface.
@@ -36,7 +38,7 @@ public final class CodeRepositoryAccessorFactory {
 	 * 				Thrown in case of an invalid repository operation.
 	 * 
 	 */
-	public CodeRepositoryAccessor getConcreteCodeRepositoryAccessor(String basePath) throws InvalidCodeRepositoryOperation {
+	public CodeRepositoryAccessor getConcreteCodeRepositoryAccessor(Path basePath) throws InvalidCodeRepositoryOperation {
 		
 		return new ConcreteCodeRepositoryAccessor(basePath);
 		

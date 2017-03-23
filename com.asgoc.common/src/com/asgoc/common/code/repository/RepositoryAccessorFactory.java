@@ -1,5 +1,7 @@
 package com.asgoc.common.code.repository;
 
+import java.nio.file.Path;
+
 import com.asgoc.common.code.repository.InvalidRepositoryOperation;
 
 /**
@@ -37,7 +39,7 @@ public final class RepositoryAccessorFactory {
 	 * @throws InvalidRepositoryOperation
 	 * 				Thrown in case of an invalid repository operation.
 	 */
-	public RepositoryAccessor getBufferedCodeRepositoryAccessor(String basePath) throws InvalidRepositoryOperation {
+	public RepositoryAccessor getBufferedCodeRepositoryAccessor(Path basePath) throws InvalidRepositoryOperation {
 		
 		return new BufferedRepositoryAccessor(basePath);
 	}
