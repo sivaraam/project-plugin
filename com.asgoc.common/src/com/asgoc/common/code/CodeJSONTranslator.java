@@ -84,7 +84,7 @@ abstract class CodeJSONTranslator {
 		hmap.put(DESCRIPTION_IDENTIFIER, crucialMetadata.description.toString());
 		
 		JSONObject indexJSONObj = (IndexJSON != null) ? new JSONObject(IndexJSON) : new JSONObject();
-		indexJSONObj.append(crucialMetadata.relativeLocation.toString(), hmap);
+		indexJSONObj.put(crucialMetadata.relativeLocation.toString(), hmap);
 		
 		return indexJSONObj.toString(PRETTY_PRINT_FACTOR);
 		

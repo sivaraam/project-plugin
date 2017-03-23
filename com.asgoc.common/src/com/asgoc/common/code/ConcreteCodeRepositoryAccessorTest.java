@@ -3,9 +3,8 @@
  */
 package com.asgoc.common.code;
 
-import static org.junit.Assert.*;
-
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -14,7 +13,7 @@ import org.junit.Test;
  * @author unique
  *
  */
-class ConcreteCodeRepositoryAccessorTest {
+public class ConcreteCodeRepositoryAccessorTest {
 
 	public ConcreteCodeRepositoryAccessorTest() throws InvalidCodeRepositoryOperation {
 		CodeRepositoryAccessorFactory craf = CodeRepositoryAccessorFactory.getInstance();
@@ -22,18 +21,43 @@ class ConcreteCodeRepositoryAccessorTest {
 	}
 	/**
 	 * Test method for {@link com.asgoc.common.code.ConcreteCodeRepositoryAccessor#storeCode(com.asgoc.common.code.Code)}.
+	 * @throws InvalidCodeRepositoryOperation 
 	 */
 	@Test
-	public void testStoreCode() {
-		fail("Not yet implemented"); // TODO
+	public void testStoreCode() throws InvalidCodeRepositoryOperation {
+		System.out.println("Store Code"); 
+		Code testCode = new Code("Copy Direct Initialization", 
+									new StringBuilder("Just a little C++ test code"),
+									new StringBuilder("Test for RVO"),
+									new ArrayList<>(),
+									Paths.get("C++/copy_direct_initialization.cpp"),
+									new StringBuilder("#include<iostream>\n" + 
+											"class T{\n" + 
+											"	public:\n" + 
+											"	explicit T(int n){\n" + 
+											"		this->n = n;\n" + 
+											"		std::cout<<\"Constructor called\";\n" + 
+											"	}\n" + 
+											"	int n;\n" + 
+											"};\n" + 
+											"int main(){\n" + 
+											"	T t1(10);\n" + 
+											"	T t2 = 10;\n" + 
+											"}\n" + 
+											"")
+									);
+		cra.storeCode(testCode);
 	}
 
 	/**
 	 * Test method for {@link com.asgoc.common.code.ConcreteCodeRepositoryAccessor#getCode(java.nio.file.Path)}.
+	 * @throws InvalidCodeRepositoryOperation 
 	 */
 	@Test
-	public void testGetCode() {
-		fail("Not yet implemented"); // TODO
+	public void testGetCode() throws InvalidCodeRepositoryOperation {
+		System.out.println("getCode : ");
+		Code testCode = cra.getCode(Paths.get("C++/copy_direct_initialization.cpp"));
+		System.out.println(testCode.getMetadata().getCrucialMetadata().getTitle());
 	}
 
 	/**
@@ -42,7 +66,8 @@ class ConcreteCodeRepositoryAccessorTest {
 	 */
 	@Test
 	public void testGetCrucialMetadata() throws InvalidCodeRepositoryOperation {
-		Collection<Code.Metadata.CrucialMetadata> values = cra.getCrucialMetadata(Paths.get("C"));
+		System.out.println("getCrucialMetadata : ");
+		Collection<Code.Metadata.CrucialMetadata> values = cra.getCrucialMetadata(Paths.get("C++"));
 		for(Code.Metadata.CrucialMetadata cm : values) {
 			System.out.println(cm.getTitle());
 		}
