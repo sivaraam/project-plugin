@@ -20,7 +20,7 @@ public interface CodeRepositoryAccessor {
 	 * 			Object which contains the data that needs to be stored in
 	 * the code repository.
 	 * 
-	 * @throws InvalidRepositoryOperation
+	 * @throws InvalidCodeRepositoryOperation
 	 * 			Exception thrown  in case of an Invalid repository 
 	 * operation.
 	 */
@@ -35,7 +35,7 @@ public interface CodeRepositoryAccessor {
 	 * @return
 	 * 			Code object that represents the code and it's metadata.
 	 *  
-	 * @throws InvalidRepositoryOperation
+	 * @throws InvalidCodeRepositoryOperation
 	 * 			Exception thrown  in case of an Invalid repository 
 	 * operation.
 	 */
@@ -52,7 +52,7 @@ public interface CodeRepositoryAccessor {
 	 * 			The list containing the crucial metdata list of the codes found 
 	 * in the given path.
 	 * 
-	 * @throws InvalidRepositoryOperation
+	 * @throws InvalidCodeRepositoryOperation
 	 * 			Exception thrown  in case of an Invalid repository 
 	 * operation.
 	 */
